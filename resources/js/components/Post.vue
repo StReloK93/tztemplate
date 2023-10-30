@@ -9,7 +9,12 @@
             voluptates eum est harum ea reiciendis?
         </p>
         <main class="flex justify-between items-center">
-            
+            <div>
+                Author
+            </div>
+            <div>
+                Date
+            </div>
         </main>
     </section>
 </template>
