@@ -18,4 +18,12 @@ return new class () extends Migration {
             $table->unique(['chat_id', 'telegraph_bot_id']);
         });
     }
+
+        /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('telegraph_chats');
+    }
 };
