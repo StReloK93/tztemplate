@@ -1,13 +1,9 @@
 <template>
-    <MyHeader />
-    <section class="container mx-auto flex-grow">
-        <router-view class="pt-4 h-100"/>
-    </section>
+    <router-view></router-view>
+
 </template>
 
 <script setup lang="ts">
-import MyHeader from './MyHeader.vue'
-import axios from '@/modules/axios'
-
+import Form from '@/components/Form.vue'
 
 </script>

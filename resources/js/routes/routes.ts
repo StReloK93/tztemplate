@@ -1,14 +1,15 @@
 export default [
     {
         path: '/',
-        component: () => import('@/pages/Home.vue'),
+        component: () => import('@/pages/general/Home.vue'),
         name: 'main',
-    },
-    {
-        path: '/post/:id',
-        component: () => import('@/pages/Post.vue'),
-        props: true,
-        name: 'post',
+        children: [
+            {
+                path: '/car-rides',
+                component: () => import('@/pages/general/CarRides.vue'),
+                name: 'car-rides',
+            }
+        ]
     },
     {
         path: '/login',
