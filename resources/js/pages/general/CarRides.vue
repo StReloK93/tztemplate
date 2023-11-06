@@ -1,87 +1,13 @@
 <template>
     <main>
         <div class="tw-flex tw-justify-between tw-items-center">
-            <h3>Mashrutlar</h3>
-            <Form :submit="() => { }">
-                <v-row>
-                    <v-col cols="12">
-                        <v-autocomplete :items="pageData.cars" v-model="formData.car" label="Avtomobil"
-                            :item-title="(item) => item.type + ' ' + item.number" :item-value="(item) => item" />
-                    </v-col>
-                    <v-col cols="12" class="py-0">
-                        <v-label>
-                            Boshlangich manzil
-                        </v-label>
-                    </v-col>
-                    <v-col cols="6">
-                        <v-autocomplete @update:model-value="startRegionChanged" :items="pageData.regions"
-                            v-model="formData.start_region" label="Viloyat" item-title="name" :item-value="(item) => item" />
-                    </v-col>
-                    <v-col cols="6">
-                        <v-autocomplete :items="pageData.start_districts"
-                            v-model="formData.start_city" label="Shahar (Tuman)" item-title="name" :item-value="(item) => item" />
-                    </v-col>
-                    <v-col cols="12" class="py-0">
-                        <v-label>
-                            Boriladigan manzil
-                        </v-label>
-                    </v-col>
-                    <v-col cols="6">
-                        <v-autocomplete @update:model-value="endRegionChanged" :items="pageData.regions"
-                            v-model="formData.end_region" label="Viloyat" item-title="name" :item-value="(item) => item" />
-                    </v-col>
-                    <v-col cols="6">
-                        <v-autocomplete :items="pageData.end_districts"
-                            v-model="formData.end_city" label="Shahar (Tuman)" item-title="name" :item-value="(item) => item" />
-                    </v-col>
-                </v-row>
-            </Form>
+            <h3>Mashrutlar</h3> 
+            <AddCarRides></AddCarRides>
         </div>
-
     </main>
 </template>
 
 <script setup lang="ts">
-import Form from '@/components/Form.vue'
-import axios from '@/modules/axios'
 import { reactive } from 'vue'
-
-const formData = reactive({
-    car: null,
-    start_region: null,
-    start_city: null,
-    end_region: null,
-    end_city: null,
-})
-
-const pageData = reactive({
-    cars: null,
-    regions: null,
-    start_districts: [],
-    end_districts: [],
-    
-})
-
-axios.get('car').then(({ data }) => {
-    pageData.cars = data
-})
-
-axios.get('region').then(({ data }) => {
-    pageData.regions = data
-})
-
-function startRegionChanged(item) {
-    formData.start_city = null
-    axios.get(`district/${item.id}`).then(({ data }) => {
-        pageData.start_districts = data
-    })
-}
-
-function endRegionChanged(item) {
-    formData.end_city = null
-    axios.get(`district/${item.id}`).then(({ data }) => {
-        pageData.end_districts = data
-    })
-}
-
+import AddCarRides from './CarRides/AddCarRides.vue';
 </script>

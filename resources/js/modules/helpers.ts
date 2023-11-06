@@ -1,0 +1,1 @@
+export const rules = [(value) => [null, ""].includes(value) ? "To'ldiring" : true]
