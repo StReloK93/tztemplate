@@ -1,9 +1,9 @@
 <template>
-    <Navigator />
-    <v-app-bar color="primary">
-        <template v-slot:prepend>
+    <Navigator/>
+    <v-app-bar :elevation="0" :border="1" color="blue-grey-lighten-5">
+        <!-- <template v-slot:prepend>
             <v-app-bar-nav-icon @click="mainStore.menu = !mainStore.menu"></v-app-bar-nav-icon>
-        </template>
+        </template> -->
         <v-app-bar-title>Title</v-app-bar-title>
         <v-spacer></v-spacer>
         <v-btn icon="mdi-magnify"/>

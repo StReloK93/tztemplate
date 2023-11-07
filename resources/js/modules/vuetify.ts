@@ -1,19 +1,19 @@
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-
+//@ts-ignore
+import colors from 'vuetify/lib/util/colors'
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
 const color = 'gray'
 const variant = 'underlined'
 
-const defaultInputParams = { color: color, variant: variant, hideDetails: "auto", noDataText: "Qo'llanma to'ldirilmagan"  }
-
+const defaultInputParams = { color: color, variant: variant, hideDetails: "auto", noDataText: "Qo'llanma to'ldirilmagan" }
 export default createVuetify({
 	components,
 	directives,
 	defaults: {
-        VList: { color: color },
+		VList: { color: color },
 		VTextarea: { ...defaultInputParams, rows: 3 },
 		VTextField: defaultInputParams,
 		VFileInput: defaultInputParams,
@@ -23,6 +23,16 @@ export default createVuetify({
 		VCombobox: defaultInputParams,
 		VSwitch: defaultInputParams,
 		VCheckbox: defaultInputParams,
-        VCardTitle: { class:"bg-blue-grey-lighten-5" },
+		VCardTitle: { class: "bg-blue-grey-lighten-5" },
+	},
+	theme: {
+		themes: {
+			light: {
+				dark: false,
+				colors: {
+					primary: colors.pink.darken1, // #E53935
+				}
+			},
+		},
 	},
 })

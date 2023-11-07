@@ -8,7 +8,12 @@ export default [
                 path: '/car-rides',
                 component: () => import('@/pages/general/CarRides.vue'),
                 name: 'car-rides',
-            }
+            },
+            {
+                path: '/transports',
+                component: () => import('@/pages/general/Transports.vue'),
+                name: 'transports',
+            },
         ]
     },
     {

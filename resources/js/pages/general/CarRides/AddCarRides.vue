@@ -3,10 +3,10 @@
         <template v-slot:activator="{ props }">
             <v-btn color="primary" v-bind="props" icon="mdi-plus" />
         </template>
-        <CustomForm :submit="submitFunction" title="Mahsulot kiritish" @close="pageData.dialog = false" >
+        <CustomForm :submit="submitFunction" title="Mahsulot kiritish" @close="pageData.dialog = false">
             <v-row>
                 <v-col cols="12">
-                    <v-autocomplete :items="pageData.cars" v-model="formData.car" label="Avtomobil"
+                    <v-autocomplete density="compact" :items="pageData.cars" v-model="formData.car" label="Avtomobil"
                         :item-title="(item) => item.type + ' ' + item.number" :item-value="(item) => item" :rules="rules" />
                 </v-col>
                 <v-col cols="12" class="py-0">
@@ -15,11 +15,12 @@
                     </v-label>
                 </v-col>
                 <v-col cols="6">
-                    <v-autocomplete @update:model-value="startRegionChanged" :items="pageData.regions"
-                        v-model="formData.start_region" label="Viloyat" item-title="name" :item-value="(item) => item" :rules="rules" />
+                    <v-autocomplete density="compact" @update:model-value="startRegionChanged" :items="pageData.regions"
+                        v-model="formData.start_region" label="Viloyat" item-title="name" :item-value="(item) => item"
+                        :rules="rules" />
                 </v-col>
                 <v-col cols="6">
-                    <v-autocomplete :items="pageData.start_districts" v-model="formData.start_city" label="Shahar (Tuman)"
+                    <v-autocomplete density="compact" :items="pageData.start_districts" v-model="formData.start_city" label="Shahar (Tuman)"
                         item-title="name" :item-value="(item) => item" :rules="rules" />
                 </v-col>
                 <v-col cols="12" class="py-0">
@@ -28,12 +29,29 @@
                     </v-label>
                 </v-col>
                 <v-col cols="6">
-                    <v-autocomplete @update:model-value="endRegionChanged" :items="pageData.regions"
-                        v-model="formData.end_region" label="Viloyat" item-title="name" :item-value="(item) => item" :rules="rules" />
+                    <v-autocomplete density="compact" @update:model-value="endRegionChanged" :items="pageData.regions"
+                        v-model="formData.end_region" label="Viloyat" item-title="name" :item-value="(item) => item"
+                        :rules="rules" />
                 </v-col>
                 <v-col cols="6">
-                    <v-autocomplete :items="pageData.end_districts" v-model="formData.end_city" label="Shahar (Tuman)"
+                    <v-autocomplete density="compact" :items="pageData.end_districts" v-model="formData.end_city" label="Shahar (Tuman)"
                         item-title="name" :item-value="(item) => item" :rules="rules" />
+                </v-col>
+
+                <v-col cols="6">
+                    <v-text-field type="time" step="900" label="Qatnov vaqti" :rules="rules"/>
+                </v-col>
+                <v-col cols="6">
+                    <v-switch label="Qat'iy shu vaqtda"></v-switch>
+                </v-col>
+                <v-col cols="6">
+                    <v-text-field type="number" label="Narxi" :rules="rules"/>
+                </v-col>
+                <v-col cols="6">
+                    <v-switch label="Manzilgacha"></v-switch>
+                </v-col>
+                <v-col cols="6">
+                    <v-text-field type="number" label="Bosh o'rindiqlar" :rules="rules"/>
                 </v-col>
             </v-row>
         </CustomForm>
