@@ -1,14 +1,9 @@
 <template>
-    <v-app class="bg-grey-lighten-5">
-        <Header />
-        <v-main>
-            <v-container>
-                <router-view></router-view>
-            </v-container>
-        </v-main>
-    </v-app>
+    <div>
+        <h1>asda</h1>
+    </div>
 </template>
 
 <script setup lang="ts">
-import Header from '@/components/Header.vue'
+
 </script>

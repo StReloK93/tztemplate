@@ -1,10 +1,10 @@
 <template>
-    <v-form ref="formTag" @submit.prevent="submitFunction" @vue:mounted="" @vue:unmounted="pageData.loading = false">
+    <v-form ref="formTag" @submit.prevent="submitFunction" @vue:mounted="formTag.reset()" @vue:unmounted="pageData.loading = false">
         <v-card>
             <v-card-title>{{ title }}</v-card-title>
             <v-divider class="border-opacity-50"></v-divider>
-            <v-card-text style="max-height: 400px;" class="pa-0">
-                <v-container>
+            <v-card-text style="max-height: 700px;" class="pa-0">
+                <v-container >
                     <slot></slot>
                 </v-container>
             </v-card-text>
@@ -38,8 +38,6 @@ const pageData = reactive({
 
 async function submitFunction() {
     const { valid } = await formTag.value.validate()
-    console.log(valid);
-    
     if(valid == false || pageData.loading) return
     pageData.loading = true
     submit()

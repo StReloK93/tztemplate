@@ -5,10 +5,10 @@ import * as directives from 'vuetify/directives'
 import colors from 'vuetify/lib/util/colors'
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
-const color = 'gray'
+const color = 'primary'
 const variant = 'underlined'
 
-const defaultInputParams = { color: color, variant: variant, hideDetails: "auto", noDataText: "Qo'llanma to'ldirilmagan" }
+const defaultInputParams = { color: color, variant: variant, hideDetails: "auto", noDataText: "Qo'llanma to'ldirilmagan", density: "compact" }
 export default createVuetify({
 	components,
 	directives,

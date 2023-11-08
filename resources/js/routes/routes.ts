@@ -1,9 +1,17 @@
 export default [
     {
         path: '/',
-        component: () => import('@/pages/general/Home.vue'),
+        component: () => import('@/pages/general/Main.vue'),
         name: 'main',
+        redirect: {
+            name: 'home'
+        },
         children: [
+            {
+                path: '/home',
+                component: () => import('@/pages/general/Home.vue'),
+                name: 'home',
+            },
             {
                 path: '/car-rides',
                 component: () => import('@/pages/general/CarRides.vue'),
