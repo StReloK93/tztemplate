@@ -5,7 +5,15 @@
             <AddCarRides></AddCarRides>
         </div>
         <section class="tw-h-64">
-            <AgGridVue class="h-100 ag-theme-alpine" :columnDefs="columnDefs" :rowData="pageData.car_rides" />
+            <AgGridVue
+                class="ag-theme-ruzzifer h-100"
+                :rowHeight="125"
+                :rowClass="'tw-max-h-20 tw-bg-white'"
+                :columnDefs="columnDefs"
+                :rowData="pageData.car_rides"
+                :rowSelection="'multiple'"
+                @grid-ready="onGridReady"
+            />
         </section>
     </main>
 </template>
@@ -28,8 +36,14 @@ const columnDefs: ColDef[] = [
     { field: 'strictly_on_time', headerName: "Qat'iy shu vaqtda" },
     { field: 'price', headerName: 'Narxi' },
     { field: 'address_to_address', headerName: 'Manzilgacha' },
-    { field: 'free_seat', headerName: "Bo'sh o'rindiqlar" },
+    { field: 'free_seat', headerName: "Bo'sh o'rindiqlar", flex: 1 },
 ]
+
+
+function onGridReady(params){
+    console.log(params)
+}
+
 
 axios.get('car-ride').then(({ data }) => pageData.car_rides = data)
 </script>

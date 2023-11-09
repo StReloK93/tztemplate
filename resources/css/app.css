@@ -16,3 +16,24 @@
 ::-webkit-scrollbar-thumb {
     background-color: #ccc;
 }
+
+.ag-theme-ruzzifer {
+    /* customise with CSS variables */
+    --ag-border-color: transparent;
+    --ag-header-height: 30px;
+    --ag-header-cell-hover-background-color: rgb(80, 40, 140);
+    --ag-header-cell-moving-background-color: rgb(80, 40, 140);
+    /* --ag-alpine-active-color: transparent; */
+    --ag-background-color: transparent;
+    --ag-selected-row-background-color: rgb(0, 255, 0, 0.1);
+
+    /* text color */
+    --ag-foreground-color: green;
+    /* header text color */
+    --ag-header-foreground-color: blue;
+    /* header back */
+    --ag-header-background-color: gold;
+
+    /* --ag-odd-row-background-color: orange; */
+    --ag-header-column-resize-handle-color: orange;
+}
