@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('ride_time');
             $table->boolean('strictly_on_time');
             $table->integer('price');
-            $table->boolean('adress_to_address');
+            $table->boolean('address_to_address');
             $table->integer('free_seat');
             $table->boolean('state');
             $table->timestamps();

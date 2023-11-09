@@ -12,7 +12,7 @@ class CarRideController extends Controller
      */
     public function index()
     {
-        //
+        return CarRide::with(['start', 'car', 'end'])->get();
     }
 
     /**
@@ -20,7 +20,17 @@ class CarRideController extends Controller
      */
     public function store(Request $request)
     {
-        return CarRide::create($request->all());
+        return CarRide::create([
+            'car_id' => $request->car['id'],
+            'start_city' => $request->start_city['id'],
+            'end_city' => $request->end_city['id'],
+            'ride_time' => $request->ride_time,
+            'strictly_on_time' => $request->strictly_on_time,
+            'price' => $request->price,
+            'free_seat' => $request->free_seat,
+            'address_to_address' => $request->address_to_address,
+            'state' => true,
+        ]);
     }
 
     /**

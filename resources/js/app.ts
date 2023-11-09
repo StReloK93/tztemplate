@@ -10,7 +10,8 @@ import vuetify from './modules/vuetify'
 
 import { AgGridVue } from "ag-grid-vue3"
 import "ag-grid-community/styles/ag-grid.css"
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import "ag-grid-community/styles/ag-theme-alpine.css"
+
 const pinia = createPinia()
 const app = createApp(App)
 app

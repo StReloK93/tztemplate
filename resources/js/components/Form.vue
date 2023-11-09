@@ -41,5 +41,7 @@ async function submitFunction() {
     if(valid == false || pageData.loading) return
     pageData.loading = true
     submit()
+    .then(() => pageData.loading = false)
+    .catch(() => pageData.loading = false)
 }
 </script>

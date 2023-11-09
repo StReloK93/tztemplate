@@ -55,7 +55,7 @@
                 </v-col>
                 <v-divider class="border-opacity-75"></v-divider>
                 <v-col sm="6" cols="12">
-                    <v-text-field v-model="formData.ride_time" type="time" step="900" label="Qatnov vaqti" :rules="rules"/>
+                    <v-text-field v-model="formData.ride_time" type="datetime-local" :step="900" label="Qatnov vaqti" :rules="rules"/>
                 </v-col>
                 <v-col sm="6" cols="12">
                     <v-switch v-model="formData.strictly_on_time" label="Qat'iy shu vaqtda" ></v-switch>
@@ -87,9 +87,9 @@ const formData = reactive({
     end_region: null,
     end_city: null,
     ride_time: null,
-    strictly_on_time: null,
+    strictly_on_time: false,
     price: null,
-    address_to_address: null,
+    address_to_address: false,
     free_seat: null,
 })
 
@@ -108,7 +108,7 @@ function startRegionChanged(item) {
     formData.start_city = null
     pageData.start_loading = true
 
-    axios.get(`district/${item.id}`).then(({ data }) => {
+    axios.get(`district/${item?.id}`).then(({ data }) => {
         pageData.start_districts = data
         setTimeout(() => pageData.start_loading = false, 500)
     })
@@ -118,9 +118,9 @@ function startRegionChanged(item) {
 }
 
 function endRegionChanged(item) {
-    pageData.end_loading = true
     formData.end_city = null
-    axios.get(`district/${item.id}`).then(({ data }) => {
+    pageData.end_loading = true
+    axios.get(`district/${item?.id}`).then(({ data }) => {
         pageData.end_districts = data
         setTimeout(() => pageData.end_loading = false, 500)
     })
@@ -130,8 +130,13 @@ function endRegionChanged(item) {
 }
 
 
-function submitFunction() {
-    console.log(formData);
+async function submitFunction() {
+
+    await axios.post('car-ride', formData).then(({data}) => {
+        console.log(data);
+    }).then(() => {
+
+    })
     
 }
 

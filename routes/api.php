@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\CarRideController;
 
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -19,6 +20,7 @@ Route::apiResource('post', PostController::class);
 Route::apiResource('car', CarController::class);
 Route::apiResource('region', RegionController::class);
 Route::apiResource('district', DistrictController::class);
+Route::apiResource('car-ride', CarRideController::class);
 
 
 Route::middleware('auth:sanctum')->group(function () {
