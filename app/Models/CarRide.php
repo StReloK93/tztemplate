@@ -30,12 +30,12 @@ class CarRide extends Model
 
     public function start()
     {
-        return $this->belongsTo(District::class, 'start_city' ,'id');
+        return $this->belongsTo(District::class, 'start_city' ,'id')->with('region');
     }
 
     public function end()
     {
-        return $this->belongsTo(District::class, 'end_city' ,'id');
+        return $this->belongsTo(District::class, 'end_city' ,'id')->with('region');
     }
 
 }

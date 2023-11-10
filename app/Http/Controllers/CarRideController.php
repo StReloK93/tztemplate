@@ -21,9 +21,9 @@ class CarRideController extends Controller
     public function store(Request $request)
     {
         return CarRide::create([
-            'car_id' => $request->car['id'],
-            'start_city' => $request->start_city['id'],
-            'end_city' => $request->end_city['id'],
+            'car_id' => $request->car,
+            'start_city' => $request->start_city,
+            'end_city' => $request->end_city,
             'ride_time' => $request->ride_time,
             'strictly_on_time' => $request->strictly_on_time,
             'price' => $request->price,
@@ -38,7 +38,7 @@ class CarRideController extends Controller
      */
     public function show(CarRide $carRide)
     {
-        //
+        return $carRide;
     }
 
     /**
