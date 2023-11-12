@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { reactive , ref} from 'vue'
+const emit = defineEmits(['close'])
 const { submit } = defineProps({
     submit: { type: Function, required: true, },
     title: { type: String, required: true }
@@ -41,7 +42,10 @@ async function submitFunction() {
     if(valid == false || pageData.loading) return
     pageData.loading = true
     submit()
-    .then(() => pageData.loading = false)
+    .then(() => {
+        pageData.loading = false
+        emit('close')
+    })
     .catch(() => pageData.loading = false)
 }
 </script>

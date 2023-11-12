@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('car_rides', function (Blueprint $table) {
             $table->id();
             $table->integer('car_id');
+            $table->string('phone');
             $table->integer('start_city');
             $table->integer('end_city');
             $table->dateTime('ride_time');

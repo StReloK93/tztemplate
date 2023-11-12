@@ -11,6 +11,7 @@ class CarRide extends Model
 
     protected $fillable = [
         'car_id',
+        'phone',
         'start_city',
         'end_city',
         'ride_time',
@@ -21,6 +22,10 @@ class CarRide extends Model
         'state',
     ];
 
+    protected $casts = [
+        'free_seat' => 'integer',
+        'price' => 'integer',
+    ];
 
 
     public function car()
@@ -37,5 +42,7 @@ class CarRide extends Model
     {
         return $this->belongsTo(District::class, 'end_city' ,'id')->with('region');
     }
+
+
 
 }

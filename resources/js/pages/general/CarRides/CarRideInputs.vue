@@ -1,8 +1,23 @@
 <template>
     <v-row>
         <v-col cols="12">
-            <v-autocomplete :items="pageData.cars" v-model="formData.car" label="Avtomobil"
-                :item-title="(item) => item.type + ' ' + item.number" :item-value="(item) => item.id" :rules="rules" />
+            <v-autocomplete
+                @update:model-value="setPhone"
+                :items="pageData.cars"
+                v-model="formData.car_id"
+                label="Avtomobil"
+                :item-title="(item) => item.type + ' ' + item.number"
+                :item-value="(item) => item.id"
+                :rules="rules"
+            />
+        </v-col>
+        <v-col cols="12">
+            <v-text-field
+                v-model="formData.phone"
+                :step="900"
+                label="Telefon raqami"
+                :rules="rules"
+            />
         </v-col>
         <v-col cols="12" class="py-0 text-center">
             <v-label class="text-caption">
@@ -10,9 +25,15 @@
             </v-label>
         </v-col>
         <v-col sm="6" cols="12">
-            <v-autocomplete @update:model-value="startRegionChanged" :items="pageData.regions"
-                v-model="formData.start_region" label="Viloyat" item-title="name" :item-value="(item) => item.id"
-                :rules="rules" />
+            <v-autocomplete
+                @update:model-value="(id) => regionChanged(id,'start')"
+                :items="pageData.regions"
+                v-model="formData.start_region"
+                label="Viloyat"
+                item-title="name"
+                :item-value="(item) => item.id"
+                :rules="rules"
+            />
         </v-col>
         <v-col sm="6" cols="12">
             <v-autocomplete :disabled="formData.start_region == null" :items="pageData.start_districts"
@@ -27,13 +48,27 @@
             </v-label>
         </v-col>
         <v-col sm="6" cols="12">
-            <v-autocomplete @update:model-value="endRegionChanged" :items="pageData.regions" v-model="formData.end_region"
-                label="Viloyat" item-title="name" :item-value="(item) => item.id" :rules="rules" />
+            <v-autocomplete
+                @update:model-value="(id) => regionChanged(id,'end')"
+                :items="pageData.regions"
+                v-model="formData.end_region"
+                label="Viloyat"
+                item-title="name"
+                :item-value="(item) => item.id"
+                :rules="rules"
+            />
         </v-col>
         <v-col sm="6" cols="12">
-            <v-autocomplete :disabled="formData.end_region == null" :items="pageData.end_districts"
-                v-model="formData.end_city" label="Shahar (Tuman)" item-title="name" :item-value="(item) => item.id"
-                :loading="pageData.end_loading" :rules="rules" />
+            <v-autocomplete
+                :disabled="formData.end_region == null"
+                :items="pageData.end_districts"
+                v-model="formData.end_city"
+                label="Shahar (Tuman)"
+                item-title="name"
+                :item-value="(item) => item.id"
+                :loading="pageData.end_loading"
+                :rules="rules"
+            />
         </v-col>
         <v-divider class="border-opacity-75"></v-divider>
         <v-col sm="6" cols="12">
@@ -59,7 +94,23 @@
 import axios from '@/modules/axios'
 import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
-const { formData } = defineProps(['formData'])
+
+
+const formData = reactive({
+    car_id: null,
+    phone: null,
+    start_region: null,
+    start_city: null,
+    end_region: null,
+    end_city: null,
+    ride_time: null,
+    strictly_on_time: false,
+    price: null,
+    address_to_address: false,
+    free_seat: null,
+})
+
+
 const pageData = reactive({
     cars: [],
     regions: [],
@@ -69,36 +120,27 @@ const pageData = reactive({
     end_districts: [],
 })
 
-function startRegionChanged(item) {
-    formData.start_city = null
-    pageData.start_loading = true
+function setPhone(id){
+    const car = pageData.cars.find((car) => car.id == id)
+    formData.phone = car.phone
+    
+}
 
-    axios.get(`district/${item?.id}`).then(({ data }) => {
-        pageData.start_districts = data
-        setTimeout(() => pageData.start_loading = false, 500)
-    })
-    .catch(() => {
-        setTimeout(() => pageData.start_loading = false, 500)
+async function regionChanged(id, way) {
+    pageData[`${way}_loading`] = true
+    pageData[`${way}_districts`] = []
+    formData[`${way}_city`] = null
+    await axios.get(`district/${id}`).then(({ data }) => {
+        pageData[`${way}_districts`] = data
+        pageData[`${way}_loading`] = false
     })
 }
 
-function endRegionChanged(item) {
-    formData.end_city = null
-    pageData.end_loading = true
-    axios.get(`district/${item?.id}`).then(({ data }) => {
-        pageData.end_districts = data
-        setTimeout(() => pageData.end_loading = false, 500)
-    })
-    .catch(() => {
-        setTimeout(() => pageData.end_loading = false, 500)
-    })
-}
+axios.all([axios.get('car'),axios.get('region')])
+.then(axios.spread(({data:cars}, {data:regions}) => {
+    pageData.cars = cars
+    pageData.regions = regions
+}))
 
-axios.get('car').then(({ data }) => {
-    pageData.cars = data
-})
-
-axios.get('region').then(({ data }) => {
-    pageData.regions = data
-})
+defineExpose({ regionChanged, formData })
 </script>

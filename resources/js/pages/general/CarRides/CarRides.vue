@@ -5,7 +5,7 @@
             <main class="d-flex align-center justify-space-between">
                 <nav></nav>
                 <AddCarRide @create="onCreateCarRide"></AddCarRide>
-                <EditCarRide @create="onEditCarRide" ref="editComponent"></EditCarRide>
+                <EditCarRide @update="onEditCarRide" ref="editComponent"></EditCarRide>
             </main>
         </div>
         <v-spacer>
@@ -37,10 +37,11 @@ const pageData = reactive({
 const columnDefs: ColDef[] = [
     { field: 'start', headerName: 'Shahar | A ', cellRenderer: CityRenderer, valueFormatter: null },
     { field: 'end', headerName: 'Shahar | B', cellRenderer: CityRenderer, valueFormatter: null , cellRendererParams: { end: true }},
-    { field: 'ride_time', headerName: 'Qatnov vaqti', cellRenderer: TimeRenderer, valueFormatter: null },
-    { field: 'price', headerName: 'Narxi' },
-    { field: 'free_seat', headerName: "Bo'sh o'rindiqlar" , cellRenderer: PassengerRenderer, valueFormatter: null },
+    { field: 'ride_time', headerName: 'Qatnov vaqti', cellRenderer: TimeRenderer, valueFormatter: null, width: 150 },
+    { field: 'price', headerName: 'Narxi', width: 100 },
+    { field: 'free_seat', headerName: "Bo'sh o'rindiqlar" , cellRenderer: PassengerRenderer, valueFormatter: null, width: 125 },
     { field: '', headerName: 'Transport №', cellRenderer: ({ data }) => `${data.car.type}  ${data.car.number}`, flex: 1 },
+    { field: 'phone', headerName: 'Telefon R', width: 130 },
     {
         cellClass: ['d-flex', 'justify-center', 'align-center', 'px-2' ,'bg-gray-100'],
         headerName: '',

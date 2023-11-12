@@ -20,8 +20,9 @@ class CarRideController extends Controller
      */
     public function store(Request $request)
     {
-        return CarRide::create([
-            'car_id' => $request->car,
+        $carRide = CarRide::create([
+            'car_id' => $request->car_id,
+            'phone' => $request->phone,
             'start_city' => $request->start_city,
             'end_city' => $request->end_city,
             'ride_time' => $request->ride_time,
@@ -31,6 +32,11 @@ class CarRideController extends Controller
             'address_to_address' => $request->address_to_address,
             'state' => true,
         ]);
+
+        $carRide->start;
+        $carRide->car;
+        $carRide->end;
+        return $carRide;
     }
 
     /**
@@ -38,15 +44,10 @@ class CarRideController extends Controller
      */
     public function show(CarRide $carRide)
     {
+        $carRide->start;
+        $carRide->car;
+        $carRide->end;
         return $carRide;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CarRide $carRide)
-    {
-        //
     }
 
     /**
@@ -54,7 +55,21 @@ class CarRideController extends Controller
      */
     public function update(Request $request, CarRide $carRide)
     {
-        //
+        $carRide->car_id = $request->car_id;
+        $carRide->phone = $request->phone;
+        $carRide->start_city = $request->start_city;
+        $carRide->end_city = $request->end_city;
+        $carRide->ride_time = $request->ride_time;
+        $carRide->strictly_on_time = $request->strictly_on_time;
+        $carRide->price = $request->price;
+        $carRide->free_seat = $request->free_seat;
+        $carRide->address_to_address = $request->address_to_address;
+        $carRide->save();
+        
+        $carRide->start;
+        $carRide->car;
+        $carRide->end;
+        return $carRide;
     }
 
     /**
