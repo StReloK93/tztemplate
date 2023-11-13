@@ -9,13 +9,30 @@ class Car extends Model
 {
     use HasFactory;
 
-    protected $fillabe = [
+    protected $fillable = [
         'user_id',
         'type',
         'number',
-        'phone',
         'color',
         'fuel_type',
         'trunk',
     ];
+
+
+    protected $casts = [
+        'trunk' => 'boolean'
+    ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function fuel()
+    {
+        return $this->belongsTo(FuelType::class, 'fuel_type' , 'id');
+    }
+
+
 }

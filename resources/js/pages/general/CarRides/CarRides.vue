@@ -1,8 +1,8 @@
 <template>
     <main class="d-flex tw-flex-col">
         <div>
-            <h3 class="text-h5 mb-3">Qatnovlar</h3>
-            <main class="d-flex align-center justify-space-between">
+            <h3 class="text-h5 mb-2">Qatnovlar</h3>
+            <main class="d-flex align-center justify-space-between mb-2">
                 <nav></nav>
                 <AddCarRide @create="onCreateCarRide"></AddCarRide>
                 <EditCarRide @update="onEditCarRide" ref="editComponent"></EditCarRide>
@@ -23,6 +23,7 @@ import EditCarRide from './EditCarRide.vue'
 import CityRenderer from './CityRenderer.vue'
 import TimeRenderer from './TimeRenderer.vue'
 import PassengerRenderer from './PassengerRenderer.vue'
+import TransportRenderer from './TransportRenderer.vue'
 import { ColDef } from 'ag-grid-community'
 import axios from '@/modules/axios'
 import { reactive, ref } from 'vue'
@@ -40,12 +41,11 @@ const columnDefs: ColDef[] = [
     { field: 'ride_time', headerName: 'Qatnov vaqti', cellRenderer: TimeRenderer, valueFormatter: null, width: 150 },
     { field: 'price', headerName: 'Narxi', width: 100 },
     { field: 'free_seat', headerName: "Bo'sh o'rindiqlar" , cellRenderer: PassengerRenderer, valueFormatter: null, width: 125 },
-    { field: '', headerName: 'Transport №', cellRenderer: ({ data }) => `${data.car.type}  ${data.car.number}`, flex: 1 },
-    { field: 'phone', headerName: 'Telefon R', width: 130 },
+    { field: '', headerName: 'Transport №', cellRenderer: TransportRenderer, flex: 1, minWidth: 230 },
     {
-        cellClass: ['d-flex', 'justify-center', 'align-center', 'px-2' ,'bg-gray-100'],
+        cellClass: ['d-flex', 'justify-center', 'align-center', 'px-2' ,'hover:tw-bg-gray-100'],
         headerName: '',
-        width: 80,
+        width: 60,
         cellRenderer: IconRenderer,
         cellRendererParams: { icon: 'mdi-pencil-outline' },
         headerClass: ['px-2'],

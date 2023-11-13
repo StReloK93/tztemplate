@@ -8,6 +8,8 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\CarRideController;
+use App\Http\Controllers\FuelTypeController;
+use App\Http\Controllers\UserController;
 
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -21,6 +23,8 @@ Route::apiResource('car', CarController::class);
 Route::apiResource('region', RegionController::class);
 Route::apiResource('district', DistrictController::class);
 Route::apiResource('car-ride', CarRideController::class);
+Route::apiResource('fuel_type', FuelTypeController::class)->only(['index']);
+Route::apiResource('users', UserController::class)->only(['index']);
 
 
 Route::middleware('auth:sanctum')->group(function () {

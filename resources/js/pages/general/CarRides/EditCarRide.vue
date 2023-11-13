@@ -31,6 +31,7 @@ function getCarRide(id){
     axios.get(`car-ride/${id}`).then(({ data }) => {
         const formData = inputComponent.value.formData
         formData.car_id = data.car_id
+        formData.phone = data.phone
         formData.start_region = data.start.region_id
         formData.end_region = data.end.region_id
         inputComponent.value.regionChanged(formData.start_region,'start')

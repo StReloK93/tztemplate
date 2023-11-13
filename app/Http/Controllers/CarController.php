@@ -12,47 +12,45 @@ class CarController extends Controller
      */
     public function index()
     {
-        return Car::all();
+        return Car::with(['user', 'fuel'])->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $car = Car::create([
+            'user_id' => $request->user_id,
+            'type' => $request->type,
+            'number' => $request->number,
+            'color' => $request->color,
+            'fuel_type' => $request->fuel_type,
+            'trunk' => $request->trunk,
+        ]);
+        $car->fuel;
+        $car->user;
+        return $car;
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Car $car)
     {
-        //
+        return $car;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Car $car)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Car $car)
     {
-        //
+        $car->user_id = $request->user_id;
+        $car->type = $request->type;
+        $car->number = $request->number;
+        $car->color = $request->color;
+        $car->fuel_type = $request->fuel_type;
+        $car->trunk = $request->trunk;
+
+        $car->save();
+        $car->fuel;
+        $car->user;
+        return $car;
     }
 
     /**

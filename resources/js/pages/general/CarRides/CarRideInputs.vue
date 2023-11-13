@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col cols="12">
+        <v-col sm="6" cols="12">
             <v-autocomplete
                 @update:model-value="setPhone"
                 :items="pageData.cars"
@@ -11,7 +11,7 @@
                 :rules="rules"
             />
         </v-col>
-        <v-col cols="12">
+        <v-col sm="6" cols="12">
             <v-text-field
                 v-model="formData.phone"
                 :step="900"
@@ -122,8 +122,7 @@ const pageData = reactive({
 
 function setPhone(id){
     const car = pageData.cars.find((car) => car.id == id)
-    formData.phone = car.phone
-    
+    formData.phone = car.user.phone
 }
 
 async function regionChanged(id, way) {

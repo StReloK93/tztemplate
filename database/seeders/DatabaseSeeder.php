@@ -5,8 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Region;
+use App\Models\User;
 use App\Models\District;
 use App\Models\Car;
+use App\Models\FuelType;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -252,7 +254,6 @@ class DatabaseSeeder extends Seeder
                 'user_id' => 1,
                 'type' => 'Gentra',
                 'number' => '85 X 555 HA',
-                'phone' => '+998936600960',
                 'color' => 'Qizil',
                 'fuel_type' => 1,
                 'trunk' => false,
@@ -261,7 +262,6 @@ class DatabaseSeeder extends Seeder
                 'user_id' => 1,
                 'type' => 'Nexia',
                 'number' => '85 X 444 HA',
-                'phone' => '+998936600961',
                 'color' => 'Qora',
                 'fuel_type' => 2,
                 'trunk' => true,
@@ -270,11 +270,25 @@ class DatabaseSeeder extends Seeder
                 'user_id' => 1,
                 'type' => 'Onix',
                 'number' => '85 X 333 HA',
-                'phone' => '+998936600962',
                 'color' => 'Oq',
                 'fuel_type' => 3,
                 'trunk' => false,
             ],
+        ]);
+
+
+
+        User::create([
+            'name' => 'Soliyev Aziz',
+            'phone' => '+998936600960',
+            'role' => 3,
+        ]);
+
+        FuelType::insert([
+            ['name' => 'Benzin'],
+            ['name' => 'Metan'],
+            ['name' => 'Propan'],
+            ['name' => 'Dizel']
         ]);
 
 

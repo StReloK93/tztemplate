@@ -19,7 +19,7 @@ export default [
             },
             {
                 path: '/transports',
-                component: () => import('@/pages/general/Transports.vue'),
+                component: () => import('@/pages/general/Transports/Transports.vue'),
                 name: 'transports',
             },
         ]
