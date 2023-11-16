@@ -12,7 +12,7 @@ class CarRideController extends Controller
      */
     public function index()
     {
-        return CarRide::with(['start', 'car', 'end'])->get();
+        return CarRide::with(['start', 'car', 'end'])->whereState(1)->get();
     }
 
     /**
@@ -33,10 +33,7 @@ class CarRideController extends Controller
             'state' => true,
         ]);
 
-        $carRide->start;
-        $carRide->car;
-        $carRide->end;
-        return $carRide;
+        return $carRide->fresh();
     }
 
     /**
@@ -44,9 +41,6 @@ class CarRideController extends Controller
      */
     public function show(CarRide $carRide)
     {
-        $carRide->start;
-        $carRide->car;
-        $carRide->end;
         return $carRide;
     }
 
@@ -66,10 +60,7 @@ class CarRideController extends Controller
         $carRide->address_to_address = $request->address_to_address;
         $carRide->save();
         
-        $carRide->start;
-        $carRide->car;
-        $carRide->end;
-        return $carRide;
+        return $carRide->fresh();
     }
 
     /**
@@ -77,6 +68,9 @@ class CarRideController extends Controller
      */
     public function destroy(CarRide $carRide)
     {
-        //
+        $carRide->state = 0;
+        $carRide->save();
+
+        return $carRide->fresh();
     }
 }

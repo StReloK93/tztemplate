@@ -28,6 +28,12 @@ class CarRide extends Model
     ];
 
 
+    protected $with = [
+        'car',
+        'start',
+        'end',
+    ];
+
     public function car()
     {
         return $this->belongsTo(Car::class);

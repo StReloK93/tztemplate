@@ -28,7 +28,9 @@ export const useAuthStore = defineStore('Auth', () => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
         await axios.get('user').then(({ data }) => {
             user.value = data
-        }).catch(() => { console.clear() })
+        }).catch(() => {
+            // console.clear()
+        })
 
     }
 
