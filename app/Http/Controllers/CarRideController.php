@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CarRide;
 use Illuminate\Http\Request;
-
+use App\Events\NewEvent;
 class CarRideController extends Controller
 {
     /**
@@ -32,7 +32,7 @@ class CarRideController extends Controller
             'address_to_address' => $request->address_to_address,
             'state' => true,
         ]);
-
+        event(new NewEvent($carRide));
         return $carRide->fresh();
     }
 

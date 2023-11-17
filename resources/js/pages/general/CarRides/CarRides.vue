@@ -7,7 +7,7 @@
                 <v-spacer>
                     <Filters v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" />
                 </v-spacer>
-                <AddCarRide @create="onCreateCarRide"></AddCarRide>
+                <AddCarRide></AddCarRide>
             </main>
         </div>
         <v-spacer>
@@ -40,6 +40,11 @@ import TransportRenderer from './TransportRenderer.vue'
 import { ColDef } from 'ag-grid-community'
 import axios from '@/modules/axios'
 import { reactive, ref } from 'vue'
+import { echo } from '@/modules/echo'
+
+echo.channel('home').listen('NewEvent', (event) => {
+	onCreateCarRide(event.msg) 
+})
 const editComponent = ref()
 const filterComponent = ref()
 
@@ -92,6 +97,7 @@ function doesExternalFilterPass(node) {
 function onCreateCarRide(CarRide) {
     pageData.car_rides.push(CarRide)
     pageData.gridApi.applyTransaction({ add: [CarRide], addIndex: 0 })
+
     pageData.gridApi.onFilterChanged()
 }
 

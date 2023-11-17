@@ -1,9 +1,10 @@
 <template>
     <div>
-        <h1>asda</h1>
+        <h1>as</h1>
     </div>
 </template>
 
 <script setup lang="ts">
+
 
 </script>
