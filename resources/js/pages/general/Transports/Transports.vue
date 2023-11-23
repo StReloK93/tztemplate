@@ -1,15 +1,14 @@
 <template>
     <main class="d-flex tw-flex-col">
         <div>
-            <h3 class="text-h5 mb-2">Transportlar</h3>
             <main class="d-flex align-center justify-space-between mb-2">
                 <nav></nav>
-                <Create @create="onCreateTransport"></Create>
-                <Edit @update="onEditTransport" ref="editComponent"></Edit>
+                <Add @create="onCreate"></Add>
+                <Edit @update="onEdit" ref="editComponent"></Edit>
             </main>
         </div>
         <v-spacer>
-            <AgGridVue class="ag-theme-ruzzifer h-100" :rowHeight="67" :rowClass="pageData.rowClass"
+            <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100" :rowHeight="58" :rowClass="pageData.rowClass"
                 :columnDefs="columnDefs" :rowData="pageData.cars" :rowSelection="'multiple'"
                 @grid-ready="(params) => pageData.gridApi = params.api" :getRowId="({data}) => data.id" />
         </v-spacer>
@@ -17,19 +16,19 @@
 </template>
 
 <script setup lang="ts">
-import Create from './AddTransport.vue'
-import IconRenderer from '@/components/IconRenderer.vue'
-import Edit from './EditTransport.vue'
+import TrunkRenderer from '@/components/AgGrid/TrunkRenderer.vue'
+import IconRenderer from '@/components/AgGrid/IconRenderer.vue'
+
+import Add from './Add.vue'
+import Edit from './Edit.vue'
 import { ColDef } from 'ag-grid-community'
 import axios from '@/modules/axios'
 import { reactive, ref } from 'vue'
-import TrunkRenderer from './TrunkRenderer.vue'
 const editComponent = ref()
-
 const pageData = reactive({
     cars: null,
     gridApi: null,
-    rowClass: ['tw-max-h-16', 'bg-white', 'tw-shadow']
+    rowClass: ['tw-max-h-14', 'bg-white', 'tw-shadow']
 })
 
 const columnDefs: ColDef[] = [
@@ -52,12 +51,12 @@ const columnDefs: ColDef[] = [
 ]
 
 
-function onCreateTransport(Transport){
+function onCreate(Transport){
     pageData.gridApi.applyTransaction({add: [Transport],addIndex: 0})
 }
 
 
-function onEditTransport(Transport){
+function onEdit(Transport){
     const rowNode = pageData.gridApi.getRowNode(Transport.id)
     rowNode.setData(Transport)
 }

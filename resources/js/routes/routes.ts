@@ -4,23 +4,32 @@ export default [
         component: () => import('@/pages/general/Index.vue'),
         name: 'main',
         redirect: {
-            name: 'home'
+            name: 'car-rides'
         },
         children: [
             {
-                path: '/home',
-                component: () => import('@/pages/general/Home.vue'),
-                name: 'home',
+                path: '/passengers',
+                component: () => import('@/pages/general/Passengers/Passengers.vue'),
+                name: 'passengers',
+                meta: {
+                    title: "Yo'lovchilar",
+                },
             },
             {
                 path: '/car-rides',
                 component: () => import('@/pages/general/CarRides/CarRides.vue'),
                 name: 'car-rides',
+                meta: {
+                    title: "Qatnovlar",
+                },
             },
             {
                 path: '/transports',
                 component: () => import('@/pages/general/Transports/Transports.vue'),
                 name: 'transports',
+                meta: {
+                    title: "Transportlar",
+                },
             },
         ]
     },

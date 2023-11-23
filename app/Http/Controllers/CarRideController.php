@@ -12,7 +12,7 @@ class CarRideController extends Controller
      */
     public function index()
     {
-        return CarRide::with(['start', 'car', 'end'])->whereState(1)->get();
+        return CarRide::whereState(1)->get();
     }
 
     /**

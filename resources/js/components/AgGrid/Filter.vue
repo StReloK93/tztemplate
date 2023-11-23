@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col cols="2" class="py-0">
+        <v-col cols="12" md="3" class="py-1">
             <v-autocomplete
                 label="Shahar | A"
                 v-model="filter.start_city"
@@ -11,7 +11,7 @@
                 variant="plain"
             />
         </v-col>
-        <v-col cols="2" class="py-0">
+        <v-col cols="12" md="3" class="py-1">
             <v-autocomplete
                 label="Shahar | B"
                 v-model="filter.end_city"
@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { reactive, computed ,watch } from 'vue'
-const { pageData } = defineProps(['pageData'])
+const { pageData, filterArray } = defineProps(['pageData', 'filterArray'])
 const filter = reactive({
     start_city: null,
     end_city: null,
@@ -36,8 +36,8 @@ const filter = reactive({
 
 
 const start_cities = computed(() => {
-    if(pageData.car_rides == null) return []
-    const array = pageData.car_rides.map((ride) => ride.start)
+    if(pageData[filterArray] == null) return []
+    const array = pageData[filterArray].map((ride) => ride.start)
     return array.filter((value, index, self) =>
         index === self.findIndex((t) => (
             t.id === value.id
@@ -47,8 +47,8 @@ const start_cities = computed(() => {
 })
 
 const end_cities = computed(() => {
-    if(pageData.car_rides == null) return []
-    const array = pageData.car_rides.map((ride) => ride.end)
+    if(pageData[filterArray] == null) return []
+    const array = pageData[filterArray].map((ride) => ride.end)
     return array.filter((value, index, self) =>
         index === self.findIndex((t) => (
             t.id === value.id

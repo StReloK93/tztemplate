@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('passengers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('phone');
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('end_city');
             $table->boolean('with_trunk');
             $table->dateTime('ride_time');
-            $table->boolean('state');
+            $table->boolean('state')->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('passengers');
     }
 };

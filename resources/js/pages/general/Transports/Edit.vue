@@ -1,15 +1,14 @@
 <template>
     <v-dialog v-model="pageData.dialog" scrollable persistent width="600px">
-        <CustomForm :submit="submitFunction" title="Mahsulot kiritish" @close="pageData.dialog = false">
-            <TransportInputs ref="inputComponent" />
+        <CustomForm :submit="submitFunction" title="Transportni tahrirlash" @close="pageData.dialog = false">
+            <Inputs ref="inputComponent" />
         </CustomForm>
     </v-dialog>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import axios from '@/modules/axios'
-import CustomForm from '@/components/Form.vue'
-import TransportInputs from './InputsTransport.vue'
+import Inputs from './Inputs.vue'
 const inputComponent = ref()
 
 const emit = defineEmits(['update'])

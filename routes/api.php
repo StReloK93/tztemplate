@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -10,7 +9,7 @@ use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\CarRideController;
 use App\Http\Controllers\FuelTypeController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\PassengerController;
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Auth\Events\Verified;
@@ -22,6 +21,7 @@ Route::apiResource('post', PostController::class);
 Route::apiResource('car', CarController::class);
 Route::apiResource('region', RegionController::class);
 Route::apiResource('district', DistrictController::class);
+Route::apiResource('passenger', PassengerController::class);
 Route::apiResource('car-ride', CarRideController::class);
 Route::apiResource('fuel_type', FuelTypeController::class)->only(['index']);
 Route::apiResource('users', UserController::class)->only(['index']);

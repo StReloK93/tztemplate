@@ -38,11 +38,13 @@ const pageData = reactive({
 
 
 async function submitFunction() {
+    
     const { valid } = await formTag.value.validate()
     if(valid == false || pageData.loading) return
     pageData.loading = true
-    submit()
-    .then(() => {
+
+    
+    submit().then(() => {
         pageData.loading = false
         emit('close')
     })

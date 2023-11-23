@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('Auth', () => {
         await axios.get('user').then(({ data }) => {
             user.value = data
         }).catch(() => {
-            // console.clear()
+            console.clear()
         })
 
     }

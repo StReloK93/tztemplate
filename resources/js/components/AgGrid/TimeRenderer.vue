@@ -20,6 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import moment from 'moment'
+import moment from '@/modules/moment'
 const { params } = defineProps(['params'])
 </script>

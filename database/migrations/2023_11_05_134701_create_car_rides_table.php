@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('price');
             $table->boolean('address_to_address');
             $table->integer('free_seat');
-            $table->boolean('state');
+            $table->boolean('state')->default(true);
             $table->timestamps();
         });
     }

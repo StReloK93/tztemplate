@@ -1,5 +1,5 @@
 <template>
-    <v-btn v-if="params.data.trunk" :color="color" density="compact" variant="text" icon="">
+    <v-btn v-if="params.data.trunk" :color="color" density="compact" variant="text">
         <v-tooltip activator="parent" location="bottom">
             Bagaj bor
         </v-tooltip>

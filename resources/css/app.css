@@ -9,6 +9,10 @@
 .ag-cell{
     @apply tw-flex tw-items-center;
 }
+
+.add-button{
+    @apply md:tw-static tw-absolute  tw-bottom-3 tw-right-3 md:tw-bottom-0 md:tw-right-0 tw-z-50;
+}
 ::-webkit-scrollbar  {
     width: 4px;
     height: 4px;

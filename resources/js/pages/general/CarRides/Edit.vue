@@ -1,15 +1,14 @@
 <template>
     <v-dialog v-model="pageData.dialog" scrollable persistent width="600px">
         <CustomForm :submit="submitFunction" title="Mahsulot kiritish" @close="pageData.dialog = false">
-            <CarRideInputs ref="inputComponent" />
+            <Inputs ref="inputComponent" />
         </CustomForm>
     </v-dialog>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import axios from '@/modules/axios'
-import CustomForm from '@/components/Form.vue'
-import CarRideInputs from './CarRideInputs.vue'
+import Inputs from './Inputs.vue'
 const inputComponent = ref()
 
 const emit = defineEmits(['update'])
@@ -34,16 +33,16 @@ function getCarRide(id){
         formData.phone = data.phone
         formData.start_region = data.start.region_id
         formData.end_region = data.end.region_id
+        formData.ride_time = data.ride_time
+        formData.strictly_on_time = data.strictly_on_time
+        formData.price = data.price
+        formData.address_to_address = data.address_to_address
+        formData.free_seat = data.free_seat
+
         inputComponent.value.regionChanged(formData.start_region,'start')
         .then(() => formData.start_city = data.start_city)
-        
         inputComponent.value.regionChanged(formData.end_region,'end')
         .then(() => formData.end_city = data.end_city)
-        formData.ride_time = data.ride_time
-        formData.strictly_on_time = Boolean(data.strictly_on_time)
-        formData.price = data.price
-        formData.address_to_address = Boolean(data.address_to_address)
-        formData.free_seat = data.free_seat
     })
 }
 

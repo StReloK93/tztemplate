@@ -54,8 +54,6 @@
 import axios from '@/modules/axios'
 import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
-
-
 const formData = reactive({
     user_id: null,
     type: null,
@@ -64,7 +62,6 @@ const formData = reactive({
     fuel_type: null,
     trunk: false,
 })
-
 
 const pageData = reactive({
     fuel_types: [],
@@ -75,15 +72,6 @@ const pageData = reactive({
     end_districts: [],
 })
 
-async function regionChanged(id, way) {
-    pageData[`${way}_loading`] = true
-    pageData[`${way}_districts`] = []
-    formData[`${way}_city`] = null
-    await axios.get(`district/${id}`).then(({ data }) => {
-        pageData[`${way}_districts`] = data
-        pageData[`${way}_loading`] = false
-    })
-}
 
 axios.all([axios.get('fuel_type'),axios.get('users')])
 .then(axios.spread(({data:fuel_types}, {data:users}) => {
@@ -91,5 +79,5 @@ axios.all([axios.get('fuel_type'),axios.get('users')])
     pageData.users = users
 }))
 
-defineExpose({ regionChanged, formData })
+defineExpose({ formData })
 </script>

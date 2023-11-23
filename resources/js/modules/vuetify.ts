@@ -25,6 +25,9 @@ export default createVuetify({
 		VCheckbox: defaultInputParams,
 		VCardTitle: { class: "bg-blue-grey-lighten-5" },
 	},
+	display: {
+		mobileBreakpoint: 'md',
+	},
 	theme: {
 		themes: {
 			light: {
