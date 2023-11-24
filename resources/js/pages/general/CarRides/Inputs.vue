@@ -95,7 +95,6 @@ import axios from '@/modules/axios'
 import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
 
-
 const formData = reactive({
     car_id: null,
     phone: null,
@@ -109,7 +108,6 @@ const formData = reactive({
     address_to_address: false,
     free_seat: null,
 })
-
 
 const pageData = reactive({
     cars: [],
