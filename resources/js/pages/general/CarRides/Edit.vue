@@ -7,7 +7,6 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import axios from '@/modules/axios'
 import Inputs from './Inputs.vue'
 const inputComponent = ref()
 

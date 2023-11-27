@@ -2,15 +2,13 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import router from "@/routes"
-import axios from '@/modules/axios'
-import axioss from 'axios'
 
 export const useAuthStore = defineStore('Auth', () => {
     const user = ref(null)
 
     async function login(data) {
 
-        axioss.get('sanctum/csrf-cookie').then(async response => {
+        axios.get('sanctum/csrf-cookie').then(async response => {
             const result = await axios.post('login', data)
             if (result.status == 299) return result.data
             else {
@@ -29,7 +27,7 @@ export const useAuthStore = defineStore('Auth', () => {
         await axios.get('user').then(({ data }) => {
             user.value = data
         }).catch(() => {
-            console.clear()
+            // console.clear()
         })
 
     }

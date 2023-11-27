@@ -27,7 +27,6 @@ import Filters from '@/components/AgGrid/Filter.vue'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
 import { ColDef } from 'ag-grid-community'
-import axios from '@/modules/axios'
 import { reactive, ref } from 'vue'
 const editComponent = ref()
 const filterComponent = ref()

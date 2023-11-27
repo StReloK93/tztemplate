@@ -78,7 +78,6 @@
 </template>
 
 <script setup lang="ts">
-import axios from '@/modules/axios'
 import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
 

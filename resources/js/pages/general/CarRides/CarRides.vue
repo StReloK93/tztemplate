@@ -6,7 +6,7 @@
                 <v-spacer>
                     <Filters v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
                 </v-spacer>
-                <Add></Add>
+                <Add @create="onCreate"></Add>
             </main>
         </div>
         <v-spacer>
@@ -32,12 +32,11 @@ import { getColDefs } from './GridColumns'
 import Filters from '@/components/AgGrid/Filter.vue'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
-import axios from '@/modules/axios'
 import { reactive, ref } from 'vue'
-import { echo } from '@/modules/echo'
 echo.channel('home').listen('CarRideCreateEvent', (event) => {
     onCreate(event.msg)
 })
+
 
 
 const editComponent = ref()

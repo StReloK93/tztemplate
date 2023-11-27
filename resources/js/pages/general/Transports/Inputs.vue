@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import axios from '@/modules/axios'
 import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
 const formData = reactive({
@@ -71,7 +70,6 @@ const pageData = reactive({
     start_districts: [],
     end_districts: [],
 })
-
 
 axios.all([axios.get('fuel_type'),axios.get('users')])
 .then(axios.spread(({data:fuel_types}, {data:users}) => {

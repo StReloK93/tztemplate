@@ -11,7 +11,6 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import axios from '@/modules/axios'
 import Inputs from './Inputs.vue'
 const emit = defineEmits(['create'])
 const inputComponent = ref()
