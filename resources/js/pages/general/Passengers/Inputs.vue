@@ -78,11 +78,11 @@
 </template>
 
 <script setup lang="ts">
+import { Passenger } from '@/interfaces';
 import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
 
-
-const formData = reactive({
+const formData: Passenger = reactive({
     name: null,
     phone: null,
     start_region: null,
@@ -92,7 +92,6 @@ const formData = reactive({
     with_trunk: false,
     ride_time: null,
 })
-
 
 const pageData = reactive({
     start_loading: false,

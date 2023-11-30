@@ -11,7 +11,7 @@
                 variant="plain"
             />
         </v-col>
-        <v-col cols="12" md="3" class="py-1">
+        <!-- <v-col cols="12" md="3" class="py-1">
             <v-autocomplete
                 label="Shahar | B"
                 v-model="filter.end_city"
@@ -21,7 +21,7 @@
                 :item-value="(item) => item.id"
                 variant="plain"
             />
-        </v-col>
+        </v-col> -->
     </v-row>
 </template>
 

@@ -31,7 +31,7 @@ function getCarRide(id){
         formData.car_id = data.car_id
         formData.phone = data.phone
         formData.start_region = data.start.region_id
-        formData.end_region = data.end.region_id
+        // formData.end_region = data.end.region_id
         formData.ride_time = data.ride_time
         formData.strictly_on_time = data.strictly_on_time
         formData.price = data.price

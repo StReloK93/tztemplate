@@ -16,7 +16,6 @@ return new class extends Migration
             $table->integer('car_id');
             $table->string('phone');
             $table->integer('start_city');
-            $table->integer('end_city');
             $table->dateTime('ride_time');
             $table->boolean('strictly_on_time');
             $table->integer('price');

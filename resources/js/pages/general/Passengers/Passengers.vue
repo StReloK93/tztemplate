@@ -26,12 +26,19 @@ import IconRenderer from '@/components/AgGrid/IconRenderer.vue'
 import Filters from '@/components/AgGrid/Filter.vue'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
-import { ColDef } from 'ag-grid-community'
+import { ColDef, GridApi } from 'ag-grid-community'
+import { Passenger } from '@/interfaces'
 import { reactive, ref } from 'vue'
 const editComponent = ref()
 const filterComponent = ref()
 
-const pageData = reactive({
+
+interface PageData{
+    passengers: Passenger[],
+    gridApi: GridApi<Passenger>,
+    rowClass: any[],
+}
+const pageData: PageData = reactive({
     passengers: null,
     gridApi: null,
     rowClass: ['tw-max-h-14', 'bg-white', 'tw-shadow']
@@ -71,5 +78,5 @@ function onEdit(Transport){
     rowNode.setData(Transport)
 }
 
-axios.get('passenger').then(({ data }) => pageData.passengers = data)
+axios.get<Passenger[]>('passenger').then(({ data }) => pageData.passengers = data)
 </script>

@@ -12,14 +12,15 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import Inputs from './Inputs.vue'
+import { Passenger } from '@/interfaces';
 const emit = defineEmits(['create'])
 const inputComponent = ref()
 const pageData = reactive({dialog: false})
 
 async function submitFunction() {
-    const formData = inputComponent.value.formData
+    const formData: Passenger = inputComponent.value.formData
 
-    await axios.post('passenger', formData).then(({data}) => {
+    await axios.post<Passenger>('passenger', formData).then(({data}) => {
         emit('create', data)
     })
 }

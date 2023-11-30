@@ -13,7 +13,6 @@ class CarRide extends Model
         'car_id',
         'phone',
         'start_city',
-        'end_city',
         'ride_time',
         'strictly_on_time',
         'price',
@@ -33,7 +32,7 @@ class CarRide extends Model
     protected $with = [
         'car',
         'start',
-        'end',
+        'ends',
     ];
 
     public function car()
@@ -46,11 +45,9 @@ class CarRide extends Model
         return $this->belongsTo(District::class, 'start_city' ,'id')->with('region');
     }
 
-    public function end()
+
+    public function ends()
     {
-        return $this->belongsTo(District::class, 'end_city' ,'id')->with('region');
+        return $this->hasMany(EndCity::class);
     }
-
-
-
 }

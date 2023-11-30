@@ -1,5 +1,6 @@
 <template>
     <v-app class="bg-grey-lighten-5">
+        <Alert />
         <Header />
         <v-main>
             <v-container class="h-100">
@@ -11,4 +12,5 @@
 
 <script setup lang="ts">
 import Header from '@/components/Header.vue'
+import Alert from '@/components/Alert.vue'
 </script>

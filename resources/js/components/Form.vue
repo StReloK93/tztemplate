@@ -14,7 +14,7 @@
                 <v-btn color="primary" variant="text" @click="$emit('close')">
                     Yopish
                 </v-btn>
-                <v-btn color="primary"  type="submit" class="ml-4" variant="flat" :loading="pageData.loading">
+                <v-btn color="primary"  type="submit" class="ml-4" variant="tonal" :loading="pageData.loading">
                     Saqlash
                 </v-btn>
             </v-card-actions>

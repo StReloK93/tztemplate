@@ -29,25 +29,30 @@
 
 <script setup lang="ts">
 import { getColDefs } from './GridColumns'
+import { GridApi } from 'ag-grid-community'
 import Filters from '@/components/AgGrid/Filter.vue'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
 import { reactive, ref } from 'vue'
+import { CarRide } from '@/interfaces'
 echo.channel('home').listen('CarRideCreateEvent', (event) => {
     onCreate(event.msg)
 })
 
-
-
 const editComponent = ref()
 const filterComponent = ref()
 
-const pageData = reactive({
+interface PageData{
+    car_rides: CarRide[] | null,
+    gridApi: GridApi<CarRide>,
+    rowClass: any[],
+}
+
+const pageData:PageData = reactive({
     car_rides: null,
     gridApi: null,
     rowClass: ['tw-max-h-14', 'bg-white', 'tw-shadow']
 })
-
 const colDefs = getColDefs(onDelete, editComponent)
 
 function doesExternalFilterPass(node) {
@@ -75,5 +80,5 @@ function onDelete(CarRide) {
     })
 }
 
-axios.get('car-ride').then(({ data }) => pageData.car_rides = data)
+axios.get<CarRide[]>('car-ride').then(({ data }) => pageData.car_rides = data)
 </script>

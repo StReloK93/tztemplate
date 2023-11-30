@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CarRide;
+use App\Models\EndCity;
 use Illuminate\Http\Request;
 use App\Events\CarRideCreateEvent;
 class CarRideController extends Controller
@@ -32,6 +33,12 @@ class CarRideController extends Controller
             'address_to_address' => $request->address_to_address,
             'state' => true,
         ]);
+
+        EndCity::create([
+            'car_ride_id' => $carRide->id,
+            'district_id' => $request->end_city
+        ]);
+        
         broadcast(new CarRideCreateEvent($carRide))->toOthers();
         return $carRide->fresh();
     }
@@ -59,6 +66,7 @@ class CarRideController extends Controller
         $carRide->free_seat = $request->free_seat;
         $carRide->address_to_address = $request->address_to_address;
         $carRide->save();
+        
         
         return $carRide->fresh();
     }
