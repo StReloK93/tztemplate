@@ -11,7 +11,12 @@
 }
 
 .add-button{
-    @apply md:tw-static tw-absolute  tw-bottom-3 tw-right-3 md:tw-bottom-0 md:tw-right-0 tw-z-50;
+    @apply tw-absolute  tw-bottom-3 tw-right-3 md:tw-bottom-0 md:tw-right-0 tw-z-50;
+}
+
+
+.car-ride-height{
+    @apply tw-max-h-32 md:tw-max-h-64;
 }
 ::-webkit-scrollbar  {
     width: 4px;
@@ -44,6 +49,7 @@
     --ag-header-background-color: transparent;
 
     /* --ag-odd-row-background-color: orange; */
+    --ag-row-hover-color: none;
     --ag-header-column-resize-handle-color: rgb(214, 214, 214);
     --ag-row-border-width: 0px;
     --ag-range-selection-border-color: transparent;

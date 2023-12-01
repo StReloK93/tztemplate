@@ -3,7 +3,7 @@
         <Alert />
         <Header />
         <v-main>
-            <v-container class="h-100">
+            <v-container class="h-100 py-2">
                 <router-view class="h-100 tw-relative"></router-view>
             </v-container>
         </v-main>

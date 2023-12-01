@@ -1,28 +1,21 @@
 <template>
-    <main class="d-flex tw-flex-col">
+    <main class="d-flex tw-flex-col tw-max-w-5xl  tw-mx-auto">
         <Edit @update="onEdit" ref="editComponent"></Edit>
         <div>
-            <main class="d-flex align-center justify-space-between mb-2 px-1">
-                <v-spacer>
-                    <Filters v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
-                </v-spacer>
+            <main class="d-flex align-center justify-end mb-2 px-1">
+                <!-- <Filters class="tw-w-80" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" /> -->
                 <Add @create="onCreate"></Add>
+                {{ name }}
             </main>
         </div>
         <v-spacer>
-            <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100"
-                :animateRows="true"
-                :defaultColDef="{ sortable: true }"
-                :isExternalFilterPresent="() => true"
-                :doesExternalFilterPass="doesExternalFilterPass"
-                :rowHeight="58"
-                :rowClass="pageData.rowClass"
-                :columnDefs="colDefs"
-                :rowData="pageData.car_rides"
-                :rowSelection="'multiple'"
-                @grid-ready="(params) => pageData.gridApi = params.api"
-                :getRowId="({ data }) => data.id"
-            />
+            <!-- :doesExternalFilterPass="doesExternalFilterPass" -->
+            <!-- :isExternalFilterPresent="() => true" -->
+
+            <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100" :animateRows="true"
+                :defaultColDef="{ sortable: true }" :rowHeight="pageData.rowHeight" :rowClass="pageData.rowClass"
+                :headerHeight="0" :columnDefs="colDefs" :rowData="pageData.car_rides" @grid-ready="gridReady"
+                :getRowId="({ data }) => data.id" />
         </v-spacer>
     </main>
 </template>
@@ -33,27 +26,33 @@ import { GridApi } from 'ag-grid-community'
 import Filters from '@/components/AgGrid/Filter.vue'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
-import { reactive, ref } from 'vue'
+import { reactive, ref, provide } from 'vue'
 import { CarRide } from '@/interfaces'
+import { useDisplay } from 'vuetify'
+import { watch } from 'vue'
+const colDefs = getColDefs()
+
 echo.channel('home').listen('CarRideCreateEvent', (event) => {
     onCreate(event.msg)
 })
 
 const editComponent = ref()
 const filterComponent = ref()
-
-interface PageData{
+provide('editComponent', editComponent)
+provide('onDelete', onDelete)
+interface PageData {
     car_rides: CarRide[] | null,
     gridApi: GridApi<CarRide>,
     rowClass: any[],
+    rowHeight: number,
 }
 
-const pageData:PageData = reactive({
+const pageData: PageData = reactive({
     car_rides: null,
     gridApi: null,
-    rowClass: ['tw-max-h-14', 'bg-white', 'tw-shadow']
+    rowClass: ['car-ride-height', 'tw-shadow', 'bg-white'],
+    rowHeight: null,
 })
-const colDefs = getColDefs(onDelete, editComponent)
 
 function doesExternalFilterPass(node) {
     return filterComponent.value.filters(node)
@@ -69,7 +68,7 @@ function onCreate(CarRide) {
 
 function onEdit(CarRide) {
     const rowNode = pageData.gridApi.getRowNode(CarRide.id)
-    rowNode.setData(CarRide)
+    rowNode.updateData(CarRide);
     pageData.gridApi.onFilterChanged()
 }
 
@@ -81,4 +80,29 @@ function onDelete(CarRide) {
 }
 
 axios.get<CarRide[]>('car-ride').then(({ data }) => pageData.car_rides = data)
+
+function setrowHeight(height) {
+    pageData.rowHeight = height;
+    setTimeout(() => pageData.gridApi.resetRowHeights())
+}
+
+const { name } = useDisplay()
+const object = {
+    xl: 260,
+    lg: 260,
+    md: 200,
+    sm: 160,
+    xs: 120,
+}
+watch(() => name.value, (current) => {
+
+    setrowHeight(object[current])
+})
+
+function gridReady(params) {
+    pageData.gridApi = params.api
+    pageData.gridApi.refreshClientSideRowModel()
+    pageData.gridApi.redrawRows()
+    setrowHeight(object[name.value])
+}
 </script>

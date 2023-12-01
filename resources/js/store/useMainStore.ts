@@ -1,10 +1,12 @@
 import { defineStore } from "pinia"
 import { ref, Ref, reactive } from "vue"
 import { Dialog } from "@/interfaces"
-
+import { useDisplay } from "vuetify"
 
 export const useMainStore = defineStore('Main', () => {
-    const menu: Ref<boolean> = ref(false)
+    const { mobile } = useDisplay()
+
+    const menu: Ref<boolean> = ref(!mobile.value)
 
     const dialog: Dialog = reactive({
         model: false,

@@ -1,6 +1,7 @@
 <template>
-    <v-row>
-        <v-col cols="12" md="3" class="py-1">
+    <main class="bg-white pa-3 tw-shadow">
+        <h3 class="text-grey-darken-1 tw-text-right">Filterlar</h3>
+        <v-col cols="12" class="py-1">
             <v-autocomplete
                 label="Shahar | A"
                 v-model="filter.start_city"
@@ -8,7 +9,7 @@
                 :items="start_cities"
                 item-title="name"
                 :item-value="(item) => item.id"
-                variant="plain"
+                variant="underlined"
             />
         </v-col>
         <!-- <v-col cols="12" md="3" class="py-1">
@@ -22,7 +23,7 @@
                 variant="plain"
             />
         </v-col> -->
-    </v-row>
+    </main>
 </template>
 
 <script setup lang="ts">

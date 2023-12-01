@@ -59,7 +59,7 @@ class CarRideController extends Controller
         $carRide->car_id = $request->car_id;
         $carRide->phone = $request->phone;
         $carRide->start_city = $request->start_city;
-        $carRide->end_city = $request->end_city;
+        // $carRide->end_city = $request->end_city;
         $carRide->ride_time = $request->ride_time;
         $carRide->strictly_on_time = $request->strictly_on_time;
         $carRide->price = $request->price;
