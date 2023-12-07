@@ -5,7 +5,6 @@
             <main class="d-flex align-center justify-end mb-2 px-1">
                 <!-- <Filters class="tw-w-80" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" /> -->
                 <Add @create="onCreate"></Add>
-                {{ name }}
             </main>
         </div>
         <v-spacer>
@@ -50,7 +49,7 @@ interface PageData {
 const pageData: PageData = reactive({
     car_rides: null,
     gridApi: null,
-    rowClass: ['car-ride-height', 'tw-shadow', 'bg-white'],
+    rowClass: ['car-ride-height', 'tw-shadow-md', 'bg-white', 'rounded-lg', 'overflow-hidden'],
     rowHeight: null,
 })
 
@@ -88,14 +87,13 @@ function setrowHeight(height) {
 
 const { name } = useDisplay()
 const object = {
-    xl: 260,
-    lg: 260,
-    md: 200,
-    sm: 160,
-    xs: 120,
+    xl: 196,
+    lg: 196,
+    md: 196,
+    sm: 196,
+    xs: 292,
 }
 watch(() => name.value, (current) => {
-
     setrowHeight(object[current])
 })
 

@@ -16,8 +16,10 @@
 
 
 .car-ride-height{
-    @apply tw-max-h-32 md:tw-max-h-64;
+    @apply tw-max-h-72 sm:tw-max-h-48;
 }
+
+
 ::-webkit-scrollbar  {
     width: 4px;
     height: 4px;

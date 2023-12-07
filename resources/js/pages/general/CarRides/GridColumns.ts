@@ -7,7 +7,8 @@ export function getColDefs() {
         {
             cellRenderer: CarRideRenderer,
             flex: 1,
-            valueFormatter:  null
+            valueFormatter:  null,
+            cellClass: ['px-0', 'align-stretch']
         },
         { field: 'ride_time', hide: true },
         { field: 'price', hide: true },
