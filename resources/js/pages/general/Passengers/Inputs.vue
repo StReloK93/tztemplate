@@ -18,7 +18,7 @@
         </v-col>
         <v-col cols="12" class="py-0 text-center">
             <v-label class="text-caption">
-                Boshlangich manzil
+                Boshlangich manzil (Qaerdan?)
             </v-label>
         </v-col>
         <v-col sm="6" cols="12">
@@ -40,7 +40,7 @@
         <v-divider class="border-opacity-75"></v-divider>
         <v-col cols="12" class="py-0 text-center">
             <v-label class="text-caption ">
-                Boriladigan manzil
+                Boriladigan manzil (Qaerga?)
             </v-label>
         </v-col>
         <v-col sm="6" cols="12">

@@ -18,10 +18,10 @@ export interface Car{
     number: string,
     color: string,
     fuel_type: number,
+    fuel: Fuel,
     trunk: boolean,
     updated_at: Date | null,
     created_at: Date | null,
-    fuel: Fuel,
 }
 
 export interface Fuel{
@@ -42,6 +42,7 @@ export interface Districts{
     id: number,
     region_id: number,
     name: string,
+    region: Region,
     updated_at: Date | null,
     created_at: Date | null,
 }
@@ -49,12 +50,13 @@ export interface Districts{
 export interface CarRide{
     id: number,
     car_id: number,
+    car: Car,
     phone: string,
     start: Districts,
     ends: Districts[],
     start_city: number,
     ride_time: Date,
-    strictle_only_time: boolean,
+    strictly_on_time: boolean,
     price: number,
     address_to_address: boolean,
     free_seat: number,

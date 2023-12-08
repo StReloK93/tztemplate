@@ -21,7 +21,7 @@
         </v-col>
         <v-col cols="12" class="py-0 text-center">
             <v-label class="text-caption">
-                Boshlangich manzil
+                Boshlangich manzil (Qaerdan?)
             </v-label>
         </v-col>
         <v-col sm="6" cols="12">
@@ -41,10 +41,61 @@
                 :item-value="(item) => item.id" :rules="rules" />
         </v-col>
         <v-divider class="border-opacity-75"></v-divider>
-
         <v-col cols="12" class="py-0 text-center">
             <v-label class="text-caption ">
-                Boriladigan manzil
+                Oraliq manzillar
+            </v-label>
+        </v-col>
+        <v-col sm="6" cols="12">
+            <v-autocomplete
+                @update:model-value="(id) => regionChanged(id,'end')"
+                :items="pageData.regions"
+                v-model="formData.end_region"
+                label="Viloyat"
+                item-title="name"
+                :item-value="(item) => item.id"
+                :rules="rules"
+            />
+        </v-col>
+        <v-col sm="6" cols="12">
+            <v-autocomplete
+                :disabled="formData.end_region == null"
+                :items="pageData.end_districts"
+                v-model="formData.end_city"
+                label="Shahar (Tuman)"
+                item-title="name"
+                :item-value="(item) => item.id"
+                :loading="pageData.end_loading"
+                :rules="rules"
+            />
+        </v-col>
+        <v-col sm="6" cols="12">
+            <v-autocomplete
+                @update:model-value="(id) => regionChanged(id,'end')"
+                :items="pageData.regions"
+                v-model="formData.end_region"
+                label="Viloyat"
+                item-title="name"
+                :item-value="(item) => item.id"
+                :rules="rules"
+            />
+        </v-col>
+        <v-col sm="6" cols="12">
+            <v-autocomplete
+                :disabled="formData.end_region == null"
+                :items="pageData.end_districts"
+                v-model="formData.end_city"
+                label="Shahar (Tuman)"
+                item-title="name"
+                :item-value="(item) => item.id"
+                :loading="pageData.end_loading"
+                :rules="rules"
+            />
+        </v-col>
+        <v-divider class="border-opacity-75"></v-divider>
+        <v-col cols="12" class="py-0 text-center">
+            <v-label class="text-caption ">
+                Boriladigan manzil (Qaerga?)
             </v-label>
         </v-col>
         <v-col sm="6" cols="12">
