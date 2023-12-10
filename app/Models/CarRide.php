@@ -12,7 +12,6 @@ class CarRide extends Model
     protected $fillable = [
         'car_id',
         'phone',
-        'start_city',
         'ride_time',
         'strictly_on_time',
         'price',
@@ -31,8 +30,7 @@ class CarRide extends Model
 
     protected $with = [
         'car',
-        'start',
-        'ends',
+        'cities',
     ];
 
     public function car()
@@ -40,14 +38,8 @@ class CarRide extends Model
         return $this->belongsTo(Car::class)->with('fuel');
     }
 
-    public function start()
+    public function cities()
     {
-        return $this->belongsTo(District::class, 'start_city' ,'id')->with('region');
-    }
-
-
-    public function ends()
-    {
-        return $this->hasMany(EndCity::class);
+        return $this->hasMany(CarRideCity::class)->with('district');
     }
 }

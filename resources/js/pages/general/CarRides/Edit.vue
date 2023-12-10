@@ -30,7 +30,7 @@ function getCarRide(id){
         const formData = inputComponent.value.formData
         formData.car_id = data.car_id
         formData.phone = data.phone
-        formData.start_region = data.start.region_id
+        formData.start.region = data.start.region_id
         // formData.end_region = data.end.region_id
         formData.ride_time = data.ride_time
         formData.strictly_on_time = data.strictly_on_time
@@ -39,9 +39,9 @@ function getCarRide(id){
         formData.free_seat = data.free_seat
 
         inputComponent.value.regionChanged(formData.start_region,'start')
-        .then(() => formData.start_city = data.start_city)
-        inputComponent.value.regionChanged(formData.end_region,'end')
-        .then(() => formData.end_city = data.end_city)
+        .then(() => formData.start.city = data.start_city)
+        // inputComponent.value.regionChanged(formData.end_region,'end')
+        // .then(() => formData.end_city = data.end_city)
     })
 }
 

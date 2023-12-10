@@ -19,108 +19,35 @@
                 :rules="rules"
             />
         </v-col>
-        <v-col cols="12" class="py-0 text-center">
-            <v-label class="text-caption">
-                Boshlangich manzil (Qaerdan?)
-            </v-label>
-        </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete
-                @update:model-value="(id) => regionChanged(id,'start')"
-                :items="pageData.regions"
-                v-model="formData.start_region"
-                label="Viloyat"
-                item-title="name"
-                :item-value="(item) => item.id"
-                :rules="rules"
-            />
-        </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete :disabled="formData.start_region == null" :items="pageData.start_districts"
-                v-model="formData.start_city" label="Shahar (Tuman)" item-title="name" :loading="pageData.start_loading"
-                :item-value="(item) => item.id" :rules="rules" />
-        </v-col>
-        <v-divider class="border-opacity-75"></v-divider>
-        <v-col cols="12" class="py-0 text-center">
-            <v-label class="text-caption ">
-                Oraliq manzillar
-            </v-label>
-        </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete
-                @update:model-value="(id) => regionChanged(id,'end')"
-                :items="pageData.regions"
-                v-model="formData.end_region"
-                label="Viloyat"
-                item-title="name"
-                :item-value="(item) => item.id"
-                :rules="rules"
-            />
-        </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete
-                :disabled="formData.end_region == null"
-                :items="pageData.end_districts"
-                v-model="formData.end_city"
-                label="Shahar (Tuman)"
-                item-title="name"
-                :item-value="(item) => item.id"
-                :loading="pageData.end_loading"
-                :rules="rules"
-            />
-        </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete
-                @update:model-value="(id) => regionChanged(id,'end')"
-                :items="pageData.regions"
-                v-model="formData.end_region"
-                label="Viloyat"
-                item-title="name"
-                :item-value="(item) => item.id"
-                :rules="rules"
-            />
-        </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete
-                :disabled="formData.end_region == null"
-                :items="pageData.end_districts"
-                v-model="formData.end_city"
-                label="Shahar (Tuman)"
-                item-title="name"
-                :item-value="(item) => item.id"
-                :loading="pageData.end_loading"
-                :rules="rules"
-            />
-        </v-col>
         <v-divider class="border-opacity-75"></v-divider>
         <v-col cols="12" class="py-0 text-center">
             <v-label class="text-caption ">
                 Boriladigan manzil (Qaerga?)
             </v-label>
         </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete
-                @update:model-value="(id) => regionChanged(id,'end')"
-                :items="pageData.regions"
-                v-model="formData.end_region"
-                label="Viloyat"
-                item-title="name"
-                :item-value="(item) => item.id"
-                :rules="rules"
-            />
-        </v-col>
-        <v-col sm="6" cols="12">
-            <v-autocomplete
-                :disabled="formData.end_region == null"
-                :items="pageData.end_districts"
-                v-model="formData.end_city"
-                label="Shahar (Tuman)"
-                item-title="name"
-                :item-value="(item) => item.id"
-                :loading="pageData.end_loading"
-                :rules="rules"
-            />
-        </v-col>
+        <template v-for="(city, index) in formData.ends">
+            <v-col sm="6" cols="12">
+                <v-autocomplete
+                    @update:model-value="(id) => regionChanged(id,index)"
+                    :items="pageData.regions"
+                    label="Viloyat"
+                    item-title="name"
+                    :item-value="(item) => item.id"
+                    :rules="rules"
+                />
+            </v-col>
+            <v-col sm="6" cols="12">
+                <v-autocomplete
+                    v-model="city.city"
+                    :items="city.districts"
+                    label="Shahar (Tuman)"
+                    item-title="name"
+                    :item-value="(item) => item.id"
+                    :loading="city.loading"
+                    :rules="rules"
+                />
+            </v-col>
+        </template>
         <v-divider class="border-opacity-75"></v-divider>
         <v-col sm="6" cols="12">
             <v-text-field v-model="formData.ride_time" type="datetime-local" :step="900" label="Qatnov vaqti"
@@ -148,10 +75,10 @@ import { reactive } from 'vue'
 const formData = reactive({
     car_id: null,
     phone: null,
-    start_region: null,
-    start_city: null,
-    end_region: null,
-    end_city: null,
+    ends: [
+        { region: null, city: null, loading: false, districts: [] },
+        { region: null, city: null, loading: false, districts: [] },
+    ],
     ride_time: null,
     strictly_on_time: false,
     price: null,
@@ -162,10 +89,6 @@ const formData = reactive({
 const pageData = reactive({
     cars: [],
     regions: [],
-    start_loading: false,
-    end_loading: false,
-    start_districts: [],
-    end_districts: [],
 })
 
 function setPhone(id){
@@ -173,13 +96,13 @@ function setPhone(id){
     formData.phone = car.user.phone
 }
 
-async function regionChanged(id, way) {
-    pageData[`${way}_loading`] = true
-    pageData[`${way}_districts`] = []
-    formData[`${way}_city`] = null
+async function regionChanged(id,index) {
+    formData.ends[index].loading = true
+    formData.ends[index].city = null
+    formData.ends[index].districts = []
     await axios.get(`district/${id}`).then(({ data }) => {
-        pageData[`${way}_districts`] = data
-        pageData[`${way}_loading`] = false
+        formData.ends[index].districts = data
+        formData.ends[index].loading = false
     })
 }
 
@@ -189,5 +112,5 @@ axios.all([axios.get('car'),axios.get('region')])
     pageData.regions = regions
 }))
 
-defineExpose({ regionChanged, formData })
+defineExpose({ regionChanged ,formData })
 </script>

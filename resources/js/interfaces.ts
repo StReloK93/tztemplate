@@ -52,8 +52,7 @@ export interface CarRide{
     car_id: number,
     car: Car,
     phone: string,
-    start: Districts,
-    ends: Districts[],
+    cities: CarRideCity[],
     start_city: number,
     ride_time: Date,
     strictly_on_time: boolean,
@@ -61,6 +60,15 @@ export interface CarRide{
     address_to_address: boolean,
     free_seat: number,
     state: boolean,
+    updated_at: Date | null,
+    created_at: Date | null,
+}
+
+export interface CarRideCity{
+    id: number,
+    car_ride_id: number,
+    district_id: number,
+    district: Districts,
     updated_at: Date | null,
     created_at: Date | null,
 }

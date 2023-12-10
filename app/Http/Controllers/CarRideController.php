@@ -3,29 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\CarRide;
-use App\Models\EndCity;
+use App\Models\CarRideCity;
 use Illuminate\Http\Request;
 use App\Events\CarRideCreateEvent;
 class CarRideController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return CarRide::whereState(1)->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $carRide = CarRide::create([
             'car_id' => $request->car_id,
             'phone' => $request->phone,
-            'start_city' => $request->start_city,
-            'end_city' => $request->end_city,
             'ride_time' => $request->ride_time,
             'strictly_on_time' => $request->strictly_on_time,
             'price' => $request->price,
@@ -34,32 +26,29 @@ class CarRideController extends Controller
             'state' => true,
         ]);
 
-        EndCity::create([
-            'car_ride_id' => $carRide->id,
-            'district_id' => $request->end_city
-        ]);
         
+
+        foreach ($request->ends as $key => $item) {
+            CarRideCity::create([
+                'car_ride_id' => $carRide->id,
+                'district_id' => $item['city']
+            ]);
+        }
+
+        $carRide = $carRide->fresh();
         broadcast(new CarRideCreateEvent($carRide))->toOthers();
-        return $carRide->fresh();
+        return $carRide;
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(CarRide $carRide)
     {
         return $carRide;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, CarRide $carRide)
     {
         $carRide->car_id = $request->car_id;
         $carRide->phone = $request->phone;
-        $carRide->start_city = $request->start_city;
-        // $carRide->end_city = $request->end_city;
         $carRide->ride_time = $request->ride_time;
         $carRide->strictly_on_time = $request->strictly_on_time;
         $carRide->price = $request->price;
@@ -71,9 +60,6 @@ class CarRideController extends Controller
         return $carRide->fresh();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(CarRide $carRide)
     {
         $carRide->state = 0;

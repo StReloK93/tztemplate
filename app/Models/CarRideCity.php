@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EndCity extends Model
+class CarRideCity extends Model
 {
     use HasFactory;
 
@@ -13,4 +13,10 @@ class EndCity extends Model
         'car_ride_id',
         'district_id',
     ];
+
+
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'id')->with('region');
+    }
 }
