@@ -20,33 +20,45 @@
             />
         </v-col>
         <v-divider class="border-opacity-75"></v-divider>
-        <v-col cols="12" class="py-0 text-center">
-            <v-label class="text-caption ">
-                Boriladigan manzil (Qaerga?)
-            </v-label>
-        </v-col>
         <template v-for="(city, index) in formData.ends">
-            <v-col sm="6" cols="12">
-                <v-autocomplete
-                    @update:model-value="(id) => regionChanged(id,index)"
-                    :items="pageData.regions"
-                    label="Viloyat"
-                    item-title="name"
-                    :item-value="(item) => item.id"
-                    :rules="rules"
-                />
+            <v-col v-if="index == 0" cols="12" class="py-0 text-center">
+                <v-label class="text-caption ">
+                    Boshlang'ich manzil (Qaerdan?)
+                </v-label>
             </v-col>
-            <v-col sm="6" cols="12">
-                <v-autocomplete
-                    v-model="city.city"
-                    :items="city.districts"
-                    label="Shahar (Tuman)"
-                    item-title="name"
-                    :item-value="(item) => item.id"
-                    :loading="city.loading"
-                    :rules="rules"
-                />
+            <v-col v-if="[1].includes(index) && index != formData.ends.length - 1" cols="12" class="py-0 text-center">
+                <v-label class="text-caption ">
+                    Oraliq manzillar
+                </v-label>
             </v-col>
+            <v-col v-if="formData.ends.length == index + 1" cols="12" class="py-0 text-center">
+                <v-label class="text-caption ">
+                    Boriladigan manzil (Qaerga?)
+                </v-label>
+            </v-col>
+            <div class="w-100 d-flex flex-wrap" :class="{'px-3':[1,2].includes(index) && index != formData.ends.length - 1}">
+                <v-col sm="6" cols="12">
+                    <v-autocomplete
+                        @update:model-value="(id) => regionChanged(id,index)"
+                        :items="pageData.regions"
+                        label="Viloyat"
+                        item-title="name"
+                        :item-value="(item) => item.id"
+                        :rules="rules"
+                    />
+                </v-col>
+                <v-col sm="6" cols="12">
+                    <v-autocomplete
+                        v-model="city.city"
+                        :items="city.districts"
+                        label="Shahar (Tuman)"
+                        item-title="name"
+                        :item-value="(item) => item.id"
+                        :loading="city.loading"
+                        :rules="rules"
+                    />
+                </v-col>
+            </div>
         </template>
         <v-divider class="border-opacity-75"></v-divider>
         <v-col sm="6" cols="12">
@@ -76,6 +88,8 @@ const formData = reactive({
     car_id: null,
     phone: null,
     ends: [
+        { region: null, city: null, loading: false, districts: [] },
+        { region: null, city: null, loading: false, districts: [] },
         { region: null, city: null, loading: false, districts: [] },
         { region: null, city: null, loading: false, districts: [] },
     ],

@@ -2,7 +2,7 @@
     <section class="d-flex w-100">
         <main class="tw-w-1/3 md:tw-w-2/5 lg:tw-w-1/3 bg-pink px-4">
             <v-timeline style="grid-row-gap: 0px;" :truncate-line="'both'" side="end" density="compact" line-color="pink-darken-3">
-                <v-timeline-item v-for="item in carRide.cities" elevation="2" dot-color="pink-darken-2" size="x-small" fill-dot icon="mdi-record-circle">
+                <v-timeline-item v-for="(item,index) in carRide.cities" :elevation="2" dot-color="pink-darken-2" size="x-small" fill-dot icon="mdi-record-circle">
                     <div class="tw-leading-none">
                         <div class="text-caption tw-text-red-50">{{ item.district.region.name }}</div>
                         <div class="tw-font-semibold">
