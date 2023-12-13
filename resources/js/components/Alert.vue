@@ -16,11 +16,11 @@
 
                 <v-card-actions class="tw-bg-slate-50">
                     <v-spacer></v-spacer>
-                    <v-btn text="Ha" type="button" color="gray" variant="tonal" @click="submit"></v-btn>
                     <v-btn text="Yoq" ref="btnCalcel" color="primary" variant="tonal" type="submit"
                         class="tw-bg-gray-50 focus:tw-outline-2 focus:tw-outline-red-300 focus:tw-outline"
                         @click="store.dialog.model = false">
                     </v-btn>
+                    <v-btn text="Ha" type="button" color="gray" variant="tonal" @click="submit"></v-btn>
                 </v-card-actions>
             </v-card>
         </v-form>

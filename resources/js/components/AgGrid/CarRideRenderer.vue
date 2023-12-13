@@ -7,8 +7,9 @@
                         <div class="text-caption tw-text-red-50">{{ item.district.region.name }}</div>
                         <div class="tw-font-semibold">
                             {{ item.district.name }}
-                            <v-btn v-if="carRide.address_to_address" icon="" size="x-small" variant="text">
+                            <v-btn v-if="carRide.address_to_address && carRide.cities.length - 1 == index" icon="" size="x-small" variant="text">
                                 <v-icon color="white">mdi-map-marker</v-icon>
+
                                 <v-tooltip :open-on-click="true" activator="parent" location="bottom">Manzilgacha</v-tooltip>
                             </v-btn>
                         </div>

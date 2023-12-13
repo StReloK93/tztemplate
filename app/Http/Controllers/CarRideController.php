@@ -55,10 +55,18 @@ class CarRideController extends Controller
         $carRide->free_seat = $request->free_seat;
         $carRide->address_to_address = $request->address_to_address;
         $carRide->save();
-        
-        
+        CarRideCity::where('car_ride_id', $carRide->id)->delete();
+
+        foreach ($request->ends as $key => $carRideCity) {
+            CarRideCity::create([
+                'car_ride_id' => $carRide->id,
+                'district_id' => $carRideCity['city']
+            ]);
+        }
         return $carRide->fresh();
     }
+
+
 
     public function destroy(CarRide $carRide)
     {
