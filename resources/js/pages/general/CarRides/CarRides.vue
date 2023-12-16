@@ -3,18 +3,23 @@
         <Edit @update="onEdit" ref="editComponent"></Edit>
         <div>
             <main class="d-flex align-center justify-end mb-2 px-1">
-                <!-- <Filters class="tw-w-80" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" /> -->
+                <Filters class="w-100" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
                 <Add @create="onCreate"></Add>
             </main>
         </div>
         <v-spacer>
-            <!-- :doesExternalFilterPass="doesExternalFilterPass" -->
-            <!-- :isExternalFilterPresent="() => true" -->
-
-            <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100" :animateRows="true"
-                :defaultColDef="{ sortable: true }" :rowHeight="pageData.rowHeight" :rowClass="pageData.rowClass"
-                :headerHeight="0" :columnDefs="colDefs" :rowData="pageData.car_rides" @grid-ready="gridReady"
-                :getRowId="({ data }) => data.id" />
+            <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100" 
+                :animateRows="true"
+                :defaultColDef="{ sortable: true }" 
+                :rowHeight="pageData.rowHeight" 
+                :rowClass="pageData.rowClass"
+                :headerHeight="0" :columnDefs="colDefs" 
+                :rowData="pageData.car_rides" 
+                @grid-ready="gridReady"
+                :getRowId="({ data }) => data.id"
+                :doesExternalFilterPass="doesExternalFilterPass"
+                :isExternalFilterPresent="() => true"
+            />
         </v-spacer>
     </main>
 </template>
@@ -29,15 +34,12 @@ import { reactive, ref, provide } from 'vue'
 import { CarRide } from '@/interfaces'
 import { useDisplay } from 'vuetify'
 import { watch } from 'vue'
-const colDefs = getColDefs()
-
 echo.channel('home').listen('CarRideCreateEvent', (event) => {
     onCreate(event.msg)
 })
-
 const editComponent = ref()
 const filterComponent = ref()
-provide('editComponent', editComponent)
+const colDefs = getColDefs(editComponent , onDelete)
 provide('onDelete', onDelete)
 interface PageData {
     car_rides: CarRide[] | null,

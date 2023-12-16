@@ -69,12 +69,11 @@
 
 <script setup lang="ts">
 import { useMainStore } from '@/store/useMainStore'
-import { inject, Ref } from 'vue'
 import moment from '@/modules/moment'
 import { CarRide } from '@/interfaces';
-const editComponent: Ref = inject('editComponent')
-const onDelete: Function = inject('onDelete')
 const { params } = defineProps(['params'])
+const editComponent = params.editComponent
+const onDelete = params.onDelete as Function
 const carRide = params.data as CarRide
 
 const store = useMainStore()
@@ -84,7 +83,7 @@ function carDelete() {
     store.dialog.open(() => {
         store.dialog.title = "Qatnovni o'chirmoqchimisiz ?"
         store.dialog.subTitle = "O'chirilgan qatnovlar savatchada 1 oy muddat saqlanadi.",
-            store.dialog.submit = () => onDelete(carRide)
+        store.dialog.submit = () => onDelete(carRide)
     })
 }
 </script>
