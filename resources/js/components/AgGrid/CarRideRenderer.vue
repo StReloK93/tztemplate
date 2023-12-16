@@ -9,7 +9,6 @@
                             {{ item.district.name }}
                             <v-btn v-if="carRide.address_to_address && carRide.cities.length - 1 == index" icon="" size="x-small" variant="text">
                                 <v-icon color="white">mdi-map-marker</v-icon>
-
                                 <v-tooltip :open-on-click="true" activator="parent" location="bottom">Manzilgacha</v-tooltip>
                             </v-btn>
                         </div>

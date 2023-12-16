@@ -2,7 +2,7 @@
     <main class="d-flex tw-flex-col tw-max-w-5xl  tw-mx-auto">
         <Edit @update="onEdit" ref="editComponent"></Edit>
         <div>
-            <main class="d-flex align-center justify-end mb-2 px-1">
+            <main class="d-flex align-center justify-between">
                 <Filters class="w-100" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
                 <Add @create="onCreate"></Add>
             </main>
@@ -30,7 +30,7 @@ import { GridApi } from 'ag-grid-community'
 import Filters from '@/components/AgGrid/Filter.vue'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
-import { reactive, ref, provide } from 'vue'
+import { reactive, ref } from 'vue'
 import { CarRide } from '@/interfaces'
 import { useDisplay } from 'vuetify'
 import { watch } from 'vue'
@@ -40,7 +40,6 @@ echo.channel('home').listen('CarRideCreateEvent', (event) => {
 const editComponent = ref()
 const filterComponent = ref()
 const colDefs = getColDefs(editComponent , onDelete)
-provide('onDelete', onDelete)
 interface PageData {
     car_rides: CarRide[] | null,
     gridApi: GridApi<CarRide>,
