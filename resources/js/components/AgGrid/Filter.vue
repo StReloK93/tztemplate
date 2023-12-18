@@ -2,10 +2,11 @@
 <v-menu :close-on-content-click="false" location="bottom">
     <template v-slot:activator="{ props }">
         <v-btn color="primary" variant="plain" v-bind="props" icon="mdi-filter-cog-outline" />
+        <v-btn v-if="filtered == false" color="primary" variant="plain" @click="resetFilter" icon="mdi-close" />
     </template>
     <v-card elevation="2" rounded="sm"  :width="300">
         <h3 class="tw-bg-gray-100 px-3 py-2 tw-font-medium">
-            Filterlar
+            Filterlar {{ filtered }}
         </h3>
         <v-row class="ma-0">
             <v-col cols="12">
@@ -42,12 +43,7 @@
 import moment from '@/modules/moment'
 import { reactive, computed ,watch } from 'vue'
 const { pageData, filterArray } = defineProps(['pageData', 'filterArray'])
-
-const filter = reactive({
-    start_city: null,
-    end_city: null,
-    ride_time: null,
-})
+const filter = reactive({start_city: null, end_city: null, ride_time: null})
 
 
 const start_cities = computed(() => {
@@ -77,35 +73,28 @@ const end_cities = computed(() => {
 })
 
 function filters(node) {
-    // if (filter.start_city == null && filter.end_city == null) return true
-
-    const array = []
-    node.data.cities.forEach(((element, index) => {
-        if(index != 0) array.push(element.district_id)
-    }))
+    // Start City
     const start = [null, node.data.cities[0].district_id].includes(filter.start_city)
+
+    // End Cities
+    const array = node.data.cities.filter((item, index) => index != 0).map((item) => item.district_id)
     const end = [null, ...array].includes(filter.end_city)
-    let date;
-    if(filter.ride_time == null){
-        date = true
-    }
-    else{
-        date = moment(node.data.ride_time).format("YYYY-MM-DD") == moment(filter.ride_time).format("YYYY-MM-DD")
-    }
-    
-    
-    // const date = [null, node.data.ride_time].includes(filter.ride_time)
+
+    // Selected Date
+    const date = [null, moment(node.data.ride_time).format("YYYY-MM-DD"), ""].includes(filter.ride_time)
     
     return start && end && date
 }
-function filterChanged() {
-    pageData.gridApi.onFilterChanged()
+
+const filtered = computed(() => {
+    const array = Object.values(filter)
+    return array.every((item) => item == null)
+})
+function resetFilter() {
+    filter.start_city = null
+    filter.end_city = null
+    filter.ride_time = null
 }
-
-defineExpose({ filters })
-
-watch(() => filter, () => {
-    
-    filterChanged()
-}, {deep:true})
+defineExpose({ filters, resetFilter, filtered })
+watch(() => filter, () => pageData.gridApi.onFilterChanged(), {deep:true})
 </script>
