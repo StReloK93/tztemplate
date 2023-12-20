@@ -1,8 +1,10 @@
 <template>
 <v-menu :close-on-content-click="false" location="bottom">
     <template v-slot:activator="{ props }">
-        <v-btn color="primary" variant="plain" v-bind="props" icon="mdi-filter-cog-outline" />
-        <v-btn v-if="filtered == false" color="primary" variant="plain" @click="resetFilter" icon="mdi-close" />
+        <main>
+            <v-btn color="primary" variant="text" v-bind="props" icon="mdi-filter" />
+            <v-btn v-if="filtered == false" color="primary" size="x-small" variant="text" @click="resetFilter" icon="mdi-close" />
+        </main>
     </template>
     <v-card elevation="2" rounded="sm"  :width="300">
         <h3 class="tw-bg-gray-100 px-3 py-2 tw-font-medium">
@@ -43,7 +45,7 @@
 import moment from '@/modules/moment'
 import { reactive, computed ,watch } from 'vue'
 const { pageData, filterArray } = defineProps(['pageData', 'filterArray'])
-const filter = reactive({start_city: null, end_city: null, ride_time: null})
+const filter = reactive({start_city: null, end_city: null, ride_time: ""})
 
 
 const start_cities = computed(() => {
@@ -54,7 +56,6 @@ const start_cities = computed(() => {
             t.id === value.id
         ))
     )
-
 })
 
 const end_cities = computed(() => {
@@ -81,20 +82,21 @@ function filters(node) {
     const end = [null, ...array].includes(filter.end_city)
 
     // Selected Date
-    const date = [null, moment(node.data.ride_time).format("YYYY-MM-DD"), ""].includes(filter.ride_time)
+    const date = [moment(node.data.ride_time).format("YYYY-MM-DD"), ""].includes(filter.ride_time)
     
     return start && end && date
 }
 
 const filtered = computed(() => {
     const array = Object.values(filter)
-    return array.every((item) => item == null)
+    return array.every((item) => [null, ""].includes(item))
 })
 function resetFilter() {
     filter.start_city = null
     filter.end_city = null
-    filter.ride_time = null
+    filter.ride_time = ""
 }
 defineExpose({ filters, resetFilter, filtered })
 watch(() => filter, () => pageData.gridApi.onFilterChanged(), {deep:true})
 </script>
+

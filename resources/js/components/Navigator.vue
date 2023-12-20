@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="mainStore.menu">
+    <v-navigation-drawer :temporary="name == 'sm'" v-model="mainStore.menu">
         <main class="d-flex tw-justify-center py-4 tw-bg-slate-100">
             <v-icon color="primary" size="34">mdi-vuetify</v-icon>
         </main>
@@ -17,5 +17,7 @@
 
 <script setup lang="ts">
 import { useMainStore } from '@/store/useMainStore'
+import { useDisplay } from 'vuetify'
+const { name } = useDisplay()
 const mainStore = useMainStore()
 </script>

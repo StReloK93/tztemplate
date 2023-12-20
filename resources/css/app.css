@@ -19,6 +19,9 @@
     @apply tw-max-h-72 sm:tw-max-h-48;
 }
 
+.v-timeline-item__body{
+    @apply !tw-pt-1 !tw-pl-0 !tw-pr-0 !tw-self-auto sm:!tw-pt-0 sm:!tw-pl-4;
+}
 
 ::-webkit-scrollbar  {
     width: 4px;

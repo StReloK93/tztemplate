@@ -26,7 +26,7 @@ export default createVuetify({
 		VCardTitle: { class: "bg-blue-grey-lighten-5" },
 	},
 	display: {
-		mobileBreakpoint: 'md',
+		mobileBreakpoint: 'sm',
 	},
 	theme: {
 		themes: {

@@ -1,32 +1,25 @@
 <template>
     <main class="d-flex tw-flex-col tw-max-w-5xl  tw-mx-auto">
         <Edit @update="onEdit" ref="editComponent"></Edit>
-        <div>
-            <main class="d-flex align-center justify-between">
-                <Filters class="w-100" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
-                <Add @create="onCreate"></Add>
-            </main>
-        </div>
+        <main class="d-flex align-center justify-space-between tw-w-full">
+            <Filters class="w-100" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
+
+            <v-btn @click="sortByCountryThenSport" variant="plain" icon="mdi-sort-clock-ascending" />
+            <Add @create="onCreate"></Add>
+        </main>
         <v-spacer>
-            <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100" 
-                :animateRows="true"
-                :defaultColDef="{ sortable: true }" 
-                :rowHeight="pageData.rowHeight" 
-                :rowClass="pageData.rowClass"
-                :headerHeight="0" :columnDefs="colDefs" 
-                :rowData="pageData.car_rides" 
-                @grid-ready="gridReady"
-                :getRowId="({ data }) => data.id"
-                :doesExternalFilterPass="doesExternalFilterPass"
-                :isExternalFilterPresent="() => true"
-            />
+            <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100" :animateRows="true"
+                :defaultColDef="{ sortable: true }" :rowHeight="pageData.rowHeight" :rowClass="pageData.rowClass"
+                :headerHeight="0" :columnDefs="colDefs" :rowData="pageData.car_rides" @grid-ready="gridReady"
+                :getRowId="({ data }) => data.id" :doesExternalFilterPass="doesExternalFilterPass"
+                :isExternalFilterPresent="() => true" />
         </v-spacer>
     </main>
 </template>
 
 <script setup lang="ts">
 import { getColDefs } from './GridColumns'
-import { GridApi } from 'ag-grid-community'
+import { GridApi , ColumnApi, ColumnState } from 'ag-grid-community'
 import Filters from '@/components/AgGrid/Filter.vue'
 import Add from './Add.vue'
 import Edit from './Edit.vue'
@@ -39,10 +32,25 @@ echo.channel('home').listen('CarRideCreateEvent', (event) => {
 })
 const editComponent = ref()
 const filterComponent = ref()
-const colDefs = getColDefs(editComponent , onDelete)
+const colDefs = getColDefs(editComponent, onDelete)
+
+
+let index = 0
+const array:any = ['asc', 'desc', null]
+const sortByCountryThenSport = () => {
+    pageData.columnApi.applyColumnState({
+        state: [
+            { colId: 'ride_time', sort: array[index], sortIndex: 1 },
+        ],
+    });
+    if(index < 2) index++
+    else index = 0
+};
+
 interface PageData {
     car_rides: CarRide[] | null,
     gridApi: GridApi<CarRide>,
+    columnApi: ColumnApi,
     rowClass: any[],
     rowHeight: number,
 }
@@ -50,6 +58,7 @@ interface PageData {
 const pageData: PageData = reactive({
     car_rides: null,
     gridApi: null,
+    columnApi: null,
     rowClass: ['car-ride-height', 'tw-shadow-md', 'bg-white', 'rounded-lg', 'overflow-hidden'],
     rowHeight: null,
 })
@@ -100,6 +109,7 @@ watch(() => name.value, (current) => {
 
 function gridReady(params) {
     pageData.gridApi = params.api
+    pageData.columnApi = params.columnApi
     pageData.gridApi.refreshClientSideRowModel()
     pageData.gridApi.redrawRows()
     setrowHeight(object[name.value])

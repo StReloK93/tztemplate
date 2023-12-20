@@ -1,12 +1,12 @@
 <template>
-    <section class="d-flex w-100">
-        <main class="tw-w-1/3 md:tw-w-2/5 lg:tw-w-1/3 bg-pink px-4">
-            <v-timeline style="grid-row-gap: 0px;" :truncate-line="'both'" side="end" density="compact" line-color="pink-darken-3">
+    <section class="d-flex w-100 tw-flex-col sm:tw-flex-row">
+        <main class="sm:tw-w-1/3 md:tw-w-2/5 lg:tw-w-1/3 bg-pink px-4 tw-h-20 sm:tw-h-[initial] d-flex align-center">
+            <v-timeline :direction="direction" style="grid-row-gap: 0px;" truncate-line="both" side="end" density="compact" line-color="pink-darken-3">
                 <v-timeline-item v-for="(item,index) in carRide.cities" :elevation="2" dot-color="pink-darken-2" size="x-small" fill-dot icon="mdi-record-circle">
                     <div class="tw-leading-none">
-                        <div class="text-caption tw-text-red-50">{{ item.district.region.name }}</div>
+                        <div class="text-caption tw-text-red-50 tw-text-center sm:tw-text-left">{{ item.district.region.name }}</div>
                         <div class="tw-font-semibold">
-                            {{ item.district.name }}
+                            {{ item.district.name }} 
                             <v-btn v-if="carRide.address_to_address && carRide.cities.length - 1 == index" icon="" size="x-small" variant="text">
                                 <v-icon color="white">mdi-map-marker</v-icon>
                                 <v-tooltip :open-on-click="true" activator="parent" location="bottom">Manzilgacha</v-tooltip>
@@ -17,7 +17,7 @@
             </v-timeline>
         </main>
 
-        <main class="tw-w-2/3 md:tw-w-3/5 lg:tw-w-2/3 px-4 py-2 d-flex flex-column justify-space-between">
+        <main class="sm:tw-w-2/3 md:tw-w-3/5 lg:tw-w-2/3 px-4 py-2 d-flex flex-column justify-space-between tw-flex-grow sm:tw-flex-grow-0">
             <section class="flex-grow-1">
                 <div class="d-flex justify-space-between">
                     <main class="tw-leading-none">
@@ -69,14 +69,20 @@
 <script setup lang="ts">
 import { useMainStore } from '@/store/useMainStore'
 import moment from '@/modules/moment'
-import { CarRide } from '@/interfaces';
+import { computed } from 'vue'
+import { CarRide } from '@/interfaces'
+import { useDisplay } from 'vuetify'
+
+const { mobile } = useDisplay()
 const { params } = defineProps(['params'])
 const editComponent = params.editComponent
 const onDelete = params.onDelete as Function
 const carRide = params.data as CarRide
 
 const store = useMainStore()
-
+const direction = computed(() => {
+    return mobile.value ? 'horizontal' : 'vertical'
+})
 
 function carDelete() {
     store.dialog.open(() => {
@@ -90,5 +96,27 @@ function carDelete() {
 <style>
 .v-timeline .v-timeline-divider__dot {
     background: none;
+}
+
+.v-timeline--horizontal.v-timeline{
+    grid-column-gap: 10px;
+}
+.v-timeline--horizontal{
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.v-timeline--horizontal::-webkit-scrollbar {
+    display: block;
+    width: 5px;
+}
+.v-timeline--horizontal::-webkit-scrollbar-track {
+    background: transparent;
+}
+    
+.v-timeline--horizontal::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-right: none;
+    border-left: none;
 }
 </style>
