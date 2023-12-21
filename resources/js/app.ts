@@ -8,9 +8,12 @@ import vuetify from './modules/vuetify'
 import Echo from './modules/echo'
 import axios from '@/modules/axios'
 import { AgGridVue } from "ag-grid-vue3"
+import VCalendar from 'v-calendar';
+
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
 import '../css/app.css'
+import 'v-calendar/style.css';
 // @ts-ignore
 window.axios = axios
 // @ts-ignore
@@ -23,6 +26,7 @@ app
 .component('CustomForm', CustomForm)
 .use(vuetify)
 .use(pinia)
+.use(VCalendar, {})
 
 const store = useAuthStore()
 

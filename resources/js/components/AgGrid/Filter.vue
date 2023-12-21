@@ -6,7 +6,7 @@
             <v-btn v-if="filtered == false" color="primary" size="x-small" variant="text" @click="resetFilter" icon="mdi-close" />
         </main>
     </template>
-    <v-card elevation="2" rounded="sm"  :width="300">
+    <v-card elevation="2" rounded="sm"  :width="280">
         <h3 class="tw-bg-gray-100 px-3 py-2 tw-font-medium">
             Filterlar {{ filtered }}
         </h3>
@@ -33,7 +33,8 @@
                     variant="plain"
                 />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="d-flex align-center flex-column">
+                <VCalendar expanded v-model="filter.ride_time" transparent borderless :attributes="attributes" color="pink" />
                 <v-text-field variant="plain" v-model="filter.ride_time" label="Qatnov kuni" type="date"></v-text-field>
             </v-col>
         </v-row>
@@ -43,9 +44,18 @@
 
 <script setup lang="ts">
 import moment from '@/modules/moment'
-import { reactive, computed ,watch } from 'vue'
+import { reactive, computed , watch, ref } from 'vue'
 const { pageData, filterArray } = defineProps(['pageData', 'filterArray'])
 const filter = reactive({start_city: null, end_city: null, ride_time: ""})
+
+const attributes = ref([
+  {
+    highlight: true,
+    dates: {
+      start: new Date(),
+    },
+  },
+]);
 
 
 const start_cities = computed(() => {
