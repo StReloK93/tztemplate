@@ -4,7 +4,7 @@
         <main class="d-flex align-center justify-space-between tw-w-full">
             <Filters class="w-100" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
 
-            <v-btn @click="sortByCountryThenSport" variant="plain" icon="mdi-sort-clock-ascending" />
+            <v-btn @click="sortByCountryThenSport" variant="plain" icon="mdi-sort" />
             <Add @create="onCreate"></Add>
         </main>
         <v-spacer>

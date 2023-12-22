@@ -2,14 +2,13 @@
 <v-menu :close-on-content-click="false" location="bottom">
     <template v-slot:activator="{ props }">
         <main>
-            <v-btn color="primary" variant="text" v-bind="props" icon="mdi-filter" />
+            <v-btn color="primary" variant="text" v-bind="props" prepend-icon="mdi-filter">
+                Filterlar
+            </v-btn>
             <v-btn v-if="filtered == false" color="primary" size="x-small" variant="text" @click="resetFilter" icon="mdi-close" />
         </main>
     </template>
     <v-card elevation="2" rounded="sm"  :width="280">
-        <h3 class="tw-bg-gray-100 px-3 py-2 tw-font-medium">
-            Filterlar {{ filtered }}
-        </h3>
         <v-row class="ma-0">
             <v-col cols="12">
                 <v-autocomplete
@@ -33,9 +32,16 @@
                     variant="plain"
                 />
             </v-col>
-            <v-col cols="12" class="d-flex align-center flex-column">
-                <VCalendar expanded v-model="filter.ride_time" transparent borderless :attributes="attributes" color="pink" />
-                <v-text-field variant="plain" v-model="filter.ride_time" label="Qatnov kuni" type="date"></v-text-field>
+            <v-col cols="12" class="d-flex align-center flex-column py-0">
+                <VDatePicker
+                    :min-date="new Date()"
+                    v-model="filter.ride_time"
+                    mode="date"
+                    transparent
+                    borderless
+                    expanded
+                />
+                <!-- <v-text-field variant="plain" v-model="filter.ride_time" label="Qatnov kuni" type="date"></v-text-field> -->
             </v-col>
         </v-row>
     </v-card>
@@ -46,17 +52,17 @@
 import moment from '@/modules/moment'
 import { reactive, computed , watch, ref } from 'vue'
 const { pageData, filterArray } = defineProps(['pageData', 'filterArray'])
-const filter = reactive({start_city: null, end_city: null, ride_time: ""})
+const filter = reactive({start_city: null, end_city: null, ride_time: null})
 
-const attributes = ref([
-  {
-    highlight: true,
-    dates: {
-      start: new Date(),
-    },
-  },
-]);
-
+// const attributes = ref([
+//   {
+//     highlight: true,
+//     dates: {
+//       start: new Date(),
+//     },
+//   },
+// ]);
+const dates = ref({ start: new Date() })
 
 const start_cities = computed(() => {
     if(pageData[filterArray] == null) return []
@@ -84,15 +90,17 @@ const end_cities = computed(() => {
 })
 
 function filters(node) {
+    console.log(filter);
+    
+    const selectedDate = filter.ride_time == null ? null : moment(filter.ride_time).format("YYYY-MM-DD")
     // Start City
     const start = [null, node.data.cities[0].district_id].includes(filter.start_city)
 
     // End Cities
     const array = node.data.cities.filter((item, index) => index != 0).map((item) => item.district_id)
     const end = [null, ...array].includes(filter.end_city)
-
     // Selected Date
-    const date = [moment(node.data.ride_time).format("YYYY-MM-DD"), ""].includes(filter.ride_time)
+    const date = [moment(node.data.ride_time).format("YYYY-MM-DD"), null].includes(selectedDate)
     
     return start && end && date
 }
@@ -104,7 +112,7 @@ const filtered = computed(() => {
 function resetFilter() {
     filter.start_city = null
     filter.end_city = null
-    filter.ride_time = ""
+    filter.ride_time = null
 }
 defineExpose({ filters, resetFilter, filtered })
 watch(() => filter, () => pageData.gridApi.onFilterChanged(), {deep:true})
