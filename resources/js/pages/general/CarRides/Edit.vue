@@ -8,7 +8,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import Inputs from './Inputs.vue'
-import { CarRide } from '@/interfaces';
+import { unformat } from 'v-money3'
+import moneyConfig from '@/modules/moneyConfig'
+import { CarRide } from '@/interfaces'
 const inputComponent = ref()
 
 const emit = defineEmits(['update'])
@@ -20,6 +22,7 @@ const pageData = reactive({
 
 async function submitFunction() {
     const formData = inputComponent.value.formData
+    formData.price = unformat(formData.price, moneyConfig)
     await axios.put(`car-ride/${pageData.car_ride.id}`, formData)
         .then(({ data }) => emit('update', data))
 }

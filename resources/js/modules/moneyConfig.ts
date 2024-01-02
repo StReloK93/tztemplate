@@ -1,0 +1,16 @@
+export default {
+    masked: false,
+    prefix: '',
+    suffix: "",
+    thousands: ' ',
+    decimal: '.',
+    precision: 0,
+    disableNegative: true,
+    disabled: false,
+    min: null,
+    max: null,
+    allowBlank: true,
+    minimumNumberOfCharacters: 0,
+    shouldRound: true,
+    focusOnRight: false,
+}

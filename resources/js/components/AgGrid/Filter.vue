@@ -41,7 +41,6 @@
                     borderless
                     expanded
                 />
-                <!-- <v-text-field variant="plain" v-model="filter.ride_time" label="Qatnov kuni" type="date"></v-text-field> -->
             </v-col>
         </v-row>
     </v-card>

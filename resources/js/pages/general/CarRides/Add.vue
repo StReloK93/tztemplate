@@ -12,13 +12,16 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import Inputs from './Inputs.vue'
+import moneyConfig from '@/modules/moneyConfig'
+import { unformat } from 'v-money3'
 const emit = defineEmits(['create'])
 const inputComponent = ref()
 const pageData = reactive({dialog: false})
 
+
 async function submitFunction() {
     const formData = inputComponent.value.formData
-
+    formData.price = unformat(formData.price, moneyConfig)
     await axios.post('car-ride', formData).then(({data}) => {
         emit('create', data)
     })

@@ -8,7 +8,8 @@ import vuetify from './modules/vuetify'
 import Echo from './modules/echo'
 import axios from '@/modules/axios'
 import { AgGridVue } from "ag-grid-vue3"
-import VCalendar from 'v-calendar';
+import VCalendar from 'v-calendar'
+import money from 'v-money3'
 
 import "ag-grid-community/styles/ag-grid.css"
 import "ag-grid-community/styles/ag-theme-alpine.css"
@@ -27,7 +28,7 @@ app
 .use(vuetify)
 .use(pinia)
 .use(VCalendar, {})
-
+.use(money)
 const store = useAuthStore()
 
 async function init() {

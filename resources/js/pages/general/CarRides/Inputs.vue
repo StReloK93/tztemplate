@@ -66,7 +66,8 @@
             <v-switch v-model="formData.strictly_on_time" label="Qat'iy shu vaqtda"></v-switch>
         </v-col>
         <v-col sm="6" cols="12">
-            <v-text-field v-model="formData.price" type="number" label="Narxi" :rules="rules" />
+            <input v-money3="config" v-model.lazy="formData.price" type="text" hidden>
+            <v-text-field label="Narxi" :rules="rules" v-model.lazy="formData.price" />
         </v-col>
         <v-col sm="6" cols="12">
             <v-switch v-model="formData.address_to_address" label="Manzilgacha"></v-switch>
@@ -78,6 +79,7 @@
 </template>
 
 <script setup lang="ts">
+import config from '@/modules/moneyConfig'
 import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
 const { edit } = defineProps(['edit'])
@@ -91,7 +93,7 @@ const formData = reactive({
     ],
     ride_time: null,
     strictly_on_time: false,
-    price: null,
+    price: "",
     address_to_address: false,
     free_seat: null,
 })
