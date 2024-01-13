@@ -10,8 +10,12 @@ const variant = 'underlined'
 
 const defaultInputParams = { color: color, variant: variant, hideDetails: "auto", noDataText: "Qo'llanma to'ldirilmagan", density: "compact" }
 export default createVuetify({
-	components,
+	components: {
+		...components,
+		VDatePicker: false,
+	},
 	directives,
+
 	defaults: {
 		VList: { color: color },
 		VTextarea: { ...defaultInputParams, rows: 3 },
@@ -28,6 +32,7 @@ export default createVuetify({
 	display: {
 		mobileBreakpoint: 'sm',
 	},
+
 	theme: {
 		themes: {
 			light: {

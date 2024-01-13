@@ -4,7 +4,7 @@
         <div>
             <main class="d-flex align-center justify-space-between mb-2 px-1">
                 <v-spacer>
-                    <Filters v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="passengers" />
+                    <!-- <Filters v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="passengers" /> -->
                 </v-spacer>
                 <Add @create="onCreate"></Add>
             </main>
@@ -65,7 +65,8 @@ const columnDefs: ColDef[] = [
 ]
 
 function doesExternalFilterPass(node) {
-    return filterComponent.value.filters(node)
+    // filterComponent.value.filters(node)
+    return true
 }
 
 function onCreate(Transport){
