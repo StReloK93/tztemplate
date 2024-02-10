@@ -25,6 +25,7 @@ class CarRide extends Model
         'price' => 'integer',
         'strictly_on_time' => 'boolean',
         'address_to_address' => 'boolean',
+        'state' => 'boolean',
     ];
 
 
