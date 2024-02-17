@@ -20,18 +20,19 @@ window.axios = axios
 // @ts-ignore
 window.echo = Echo
 
-const pinia = createPinia()
-const app = createApp(App)
-app
-.component('AgGridVue', AgGridVue)
-.component('CustomForm', CustomForm)
-.use(vuetify)
-.use(pinia)
-.use(VCalendar, {})
-.use(money)
-const store = useAuthStore()
+
 
 async function init() {
+	const pinia = createPinia()
+	const app = createApp(App)
+	app
+		.component('AgGridVue', AgGridVue)
+		.component('CustomForm', CustomForm)
+		.use(vuetify)
+		.use(pinia)
+		.use(VCalendar, {})
+		.use(money)
+	const store = useAuthStore()
 	await store.getUser()
 	app.use(router)
 	app.mount("#app")

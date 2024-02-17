@@ -33,9 +33,9 @@ export const useAuthStore = defineStore('Auth', () => {
     }
 
 
-    async function register(props) {
+    async function sendSecretCode(props) {
         try{
-            const result = await axios.post('register', props)
+            const result = await axios.post('sendSecretCode', props)
             if (result.status == 200) login(props)
             else return result.data
         } catch (err){
@@ -54,5 +54,5 @@ export const useAuthStore = defineStore('Auth', () => {
         }
     }
 
-    return { user, getUser, login, register, logout }
+    return { user, getUser, login, sendSecretCode, logout }
 })

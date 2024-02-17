@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\PhoneRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\PasswordResetRequest;
 use App\Services\UserService;
@@ -10,22 +10,22 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct (UserService $userService) {
+    public function __construct (UserService $service) {
 
-        $this->service = $userService;
+        $this->service = $service;
 
     }
 
-    public function Login(LoginRequest $request)
+    public function Login(PhoneRequest $request)
     {
 
         return $this->service->login($request);
     
     }
 
-    public function register(RegisterRequest $request)
+    public function sendSecretCode(PhoneRequest $request)
     {
-        return $this->service->register($request);
+        return $this->service->sendSecretCode($request);
     }
 
 

@@ -1,28 +1,26 @@
 <template>
-    <div name="login" class="flex justify-center items-center h-full">
-        <form class="bg-white shadow px-4 py-6 border-t-2 border-cyan-400 w-80 rounded">
-            <div class="mb-4">
-                <label for="email-input" class="input-label">Email</label>
-                <input id="email-input" type="email" class="input">
-            </div>
-            <div class="mb-4">
-                <label for="password-input" class="input-label">Password</label>
-                <input id="password-input" type="password" class="input">
-            </div>
-            <div class="flex justify-between items-center mb-4">
-                <button type="submit" class="btn btn-gray">
-                    Login
-                </button>
-
-                <router-link :to="{name: 'forgotpassword'}" class="text-sm text-sky-400">Forgot password?</router-link>
-            </div>
-            <div class="text-sm text-center text-gray-500">
-                Don't have an account? <router-link :to="{name: 'register'}" class="text-sky-400">Create an Account</router-link>
-            </div>
-        </form>
-    </div>
+    <v-app class="tw-h-screen">
+        <v-container class="tw-flex tw-h-full tw-justify-center tw-items-center">
+            <v-card class="tw-p-4 py-10" :width="600">
+                <v-form @submit.prevent="signin">
+                    <v-text-field label="Telefon raqamingizni kiriting" class="mb-4" v-model="phone" type="number"></v-text-field>
+                    
+                    <VBtn type="submit">
+                        Kirish
+                    </VBtn>    
+                </v-form>
+            </v-card>
+        </v-container>
+    </v-app>
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/store/useAuthStore';
+import { ref } from 'vue';
+const authStore = useAuthStore()
 
+const phone = ref(null)
+async function signin(){
+    await authStore.sendSecretCode({phone: phone.value})
+}
 </script>

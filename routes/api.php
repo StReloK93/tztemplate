@@ -11,11 +11,8 @@ use App\Http\Controllers\FuelTypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PassengerController;
 
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Auth\Events\Verified;
-
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/sendSecretCode', [AuthController::class, 'sendSecretCode']);
 Route::apiResource('post', PostController::class);
 
 Route::apiResource('car', CarController::class);
@@ -39,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 // Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 //     $request->fulfill();
- 
+
 //     return redirect('/home');
 // })->middleware(['signed','auth:sanctum'])->name('verification.verify');
 

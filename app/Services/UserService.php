@@ -1,47 +1,50 @@
 <?php
 
 namespace App\Services;
-use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
-use App\Models\User;
+
 use Auth;
-use Hash;
-class UserService {
+use App\Models\User;
 
-    public function login($request) {
+class UserService
+{
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+    public function login($request)
+    {
+        User::updateOrCreate(['phone' => $request->phone]);
+
+        if (Auth::attempt($request->only('phone'))) {
 
             $user = Auth::user();
             $token = $this->createToken($user);
-            return response()->json(['token' => $token,'type' => 'Bearer'], 200);
+            return response()->json(['token' => $token, 'type' => 'Bearer'], 200);
 
         }
 
         return response()->json(['message' => 'Parol yoki email xato!'], 299);
     }
 
-    private function createToken($user) {
+    public static function sendSecretCode($request)
+    {
+        $number = random_int(100000, 999999);
+        $data = EskizSmsService::sendSecretCode($request->phone, "Maxfiy kodni kiriting $number");
+        if ($data->status == "error")
+            return response()->json(['message' => $data], 403);
+
+        return response()->json(['message'=> 'success'], 200);
+    }
+    private function createToken($user)
+    {
         return $user->createToken('userToken', ['almighty'])->plainTextToken;
     }
 
-
-    public function register($request) {
-
-        $params = $request->only('email','name','password');
-        $params['password'] = Hash::make($params['password']);
-        $user = User::create($params);
-
-        event(new Registered($user));
-        return response()->json(true, 200);
-    }
-
-    public function getUser($request){
+    public function getUser($request)
+    {
         return $request->user()->tokens;
     }
 
 
-    public function logout($request): void {
+    public function logout($request): void
+    {
 
         $user = $request->user();
         $user->currentAccessToken()->delete();
