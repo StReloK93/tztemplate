@@ -10,24 +10,25 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    private UserService $service;
+    
     public function __construct (UserService $service) {
 
         $this->service = $service;
 
     }
 
+
+    public function sendSecretCode(PhoneRequest $request)
+    {
+        return $this->service->sendSecretCode($request);
+    }
     public function Login(PhoneRequest $request)
     {
 
         return $this->service->login($request);
     
     }
-
-    public function sendSecretCode(PhoneRequest $request)
-    {
-        return $this->service->sendSecretCode($request);
-    }
-
 
     public function logout(Request $request)
     {
@@ -41,11 +42,6 @@ class AuthController extends Controller
         return $this->service->getUser($request);
 
     }
-
-    public function passwordReset(PasswordResetRequest $request){
-        return $this->service->passwordReset($request);
-    }
-
 
     public function logoutUser(Request $request){
         return $this->service->logout($request);

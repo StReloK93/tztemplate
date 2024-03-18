@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('Auth', () => {
     async function sendSecretCode(props) {
         try{
             const result = await axios.post('sendSecretCode', props)
-            if (result.status == 200) login(props)
+            if (result.status == 200) router.push({ name: 'secret_code',  state: { props } })
             else return result.data
         } catch (err){
             return err.response.data

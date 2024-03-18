@@ -4,15 +4,14 @@ namespace App\Services;
 
 use Auth;
 use App\Models\User;
-
+use App\Models\SMSList;
 class UserService
 {
 
     public function login($request)
     {
-        User::updateOrCreate(['phone' => $request->phone]);
-
-        if (Auth::attempt($request->only('phone'))) {
+        $user = User::updateOrCreate(['phone' => $request->phone]);
+        if (Auth::loginUsingId($user->id)) {
 
             $user = Auth::user();
             $token = $this->createToken($user);
@@ -26,10 +25,17 @@ class UserService
     public static function sendSecretCode($request)
     {
         $number = random_int(100000, 999999);
-        $data = EskizSmsService::sendSecretCode($request->phone, "Maxfiy kodni kiriting $number");
-        if ($data->status == "error")
-            return response()->json(['message' => $data], 403);
+        $message = "Maxfiy kodni kiriting $number";
+        // $data = EskizSmsService::sendSecretCode($request->phone, $message);
+        // if ($data->status == "error") return response()->json(['message' => $data], 403);
 
+        SMSList::create([
+            'type' => 1,
+            'phone' => $request->phone,
+            'message' => $message,
+            'code' => $number,
+        ]);
+        
         return response()->json(['message'=> 'success'], 200);
     }
     private function createToken($user)

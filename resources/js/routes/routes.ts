@@ -39,10 +39,27 @@ const routes: any[] = [
   {
     path: '/login',
     name: 'login',
+    redirect: {
+      name: 'login_page',
+    },
+    props: true,
+    component: () => import('@/pages/login/Login.vue'),
     meta: {
       guard: 'guest',
     },
-    component: () => import('@/pages/Login.vue'),
+    children: [
+      {
+        name: 'login_page',
+        path: '',
+        component: () => import('@/pages/login/PhonePage.vue'),
+      },
+      {
+        name: 'secret_code',
+        path: '/secret-code',
+        component: () => import('@/pages/login/SecretCode.vue'),
+        props: true
+      },
+    ]
   },
   {
     path: '/register',
