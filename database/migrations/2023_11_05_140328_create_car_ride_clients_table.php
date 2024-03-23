@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('car_ride_clients', function (Blueprint $table) {
             $table->id();
             $table->integer('car_ride_id');
-            $table->integer('client_id');
+            $table->integer('passenger_id');
             $table->timestamps();
         });
     }

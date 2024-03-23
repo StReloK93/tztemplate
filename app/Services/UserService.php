@@ -5,29 +5,45 @@ namespace App\Services;
 use Auth;
 use App\Models\User;
 use App\Models\SMSList;
+use Carbon\Carbon;
 class UserService
 {
 
     public function login($request)
     {
-        $user = User::updateOrCreate(['phone' => $request->phone]);
-        if (Auth::loginUsingId($user->id)) {
 
-            $user = Auth::user();
-            $token = $this->createToken($user);
-            return response()->json(['token' => $token, 'type' => 'Bearer'], 200);
+        $sms = SMSList::where([
+            ['phone', $request->phone],
+            ['created_at' , '>=' , Carbon::now()->subMinutes(4)]
+        ])->latest()->first();
+
+        if(isset($sms)){
+            if($sms->code == $request->code){
+                $user = User::updateOrCreate(['phone' => $request->phone]);
+                if (Auth::loginUsingId($user->id)) {
+        
+                    $user = Auth::user();
+                    $token = $this->createToken($user);
+                    return response()->json(['token' => $token, 'type' => 'Bearer'], 200);
+        
+                }
+            }
+            else{
+                return response()->json(['message' => "Maxfiy kod to'g'ri kelmadi", 'code' => 1], 404);
+            }
 
         }
-
-        return response()->json(['message' => 'Parol yoki email xato!'], 299);
+        else{
+            return response()->json(['message' => "Maxfiy kodni muddati tugadi", 'code' => 2], 404);
+        }
     }
 
     public static function sendSecretCode($request)
     {
-        $number = random_int(100000, 999999);
-        $message = "Maxfiy kodni kiriting $number";
-        // $data = EskizSmsService::sendSecretCode($request->phone, $message);
-        // if ($data->status == "error") return response()->json(['message' => $data], 403);
+        $number = random_int(10000, 99999);
+        $message = "'Online taxi' Maxfiy kodni kiriting $number";
+        $data = EskizSmsService::sendSecretCode($request->phone, $message);
+        if ($data->status == "error") return response()->json(['message' => $data], 403);
 
         SMSList::create([
             'type' => 1,

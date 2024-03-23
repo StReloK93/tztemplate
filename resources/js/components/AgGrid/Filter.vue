@@ -17,7 +17,7 @@
                     clearable
                     :items="start_cities"
                     item-title="name"
-                    :item-value="(item) => item.id"
+                    :item-value="(item:any) => item.id"
                     variant="plain"
                 />
             </v-col>
@@ -28,7 +28,7 @@
                     clearable
                     :items="end_cities"
                     item-title="name"
-                    :item-value="(item) => item.id"
+                    :item-value="(item:any) => item.id"
                     variant="plain"
                 />
             </v-col>
@@ -89,8 +89,6 @@ const end_cities = computed(() => {
 })
 
 function filters(node) {
-    console.log(filter);
-    
     const selectedDate = filter.ride_time == null ? null : moment(filter.ride_time).format("YYYY-MM-DD")
     // Start City
     const start = [null, node.data.cities[0].district_id].includes(filter.start_city)

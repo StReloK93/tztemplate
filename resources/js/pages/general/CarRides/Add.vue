@@ -16,13 +16,17 @@ import moneyConfig from '@/modules/moneyConfig'
 import { unformat } from 'v-money3'
 const emit = defineEmits(['create'])
 const inputComponent = ref()
-const pageData = reactive({dialog: false})
+const pageData = reactive({ dialog: false })
 
 
 async function submitFunction() {
     const formData = inputComponent.value.formData
+    if(formData.ride_time == null) return inputComponent.value.datePicked()
+    
     formData.price = unformat(formData.price, moneyConfig)
-    await axios.post('car-ride', formData).then(({data}) => {
+    if (formData.strictly_on_time == null) formData.strictly_on_time = false
+    if (formData.address_to_address == null) formData.address_to_address = false
+    await axios.post('car-ride', formData).then(({ data }) => {
         emit('create', data)
     })
 }

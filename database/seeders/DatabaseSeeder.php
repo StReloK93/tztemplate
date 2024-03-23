@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
 
         Region::insert([
-            ["name" => "Qoraqalpog'iston Res." ],
+            ["name" => "Qoraqalpog'iston" ],
             ["name" => "Andijon viloyati"],
             ["name" => "Buxoro viloyati"],
             ["name" => "Jizzax viloyati"],

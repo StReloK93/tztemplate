@@ -115,7 +115,7 @@ function carDelete() {
     store.dialog.open(() => {
         store.dialog.title = "Qatnovni o'chirmoqchimisiz ?"
         store.dialog.subTitle = "O'chirilgan qatnovlar savatchada 1 oy muddat saqlanadi.",
-            store.dialog.submit = () => onDelete(carRide)
+        store.dialog.submit = () => onDelete(carRide)
     })
 }
 </script>

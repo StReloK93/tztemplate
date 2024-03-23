@@ -34,6 +34,15 @@ const routes: any[] = [
           title: "Transportlar",
         },
       },
+      {
+        path: '/operator/:id',
+        component: () => import('@/pages/general/Operator/Operator.vue'),
+        name: 'operator',
+        props: true,
+        meta: {
+          title: "Operatorlarga",
+        },
+      },
     ],
   },
   {
@@ -60,14 +69,6 @@ const routes: any[] = [
         props: true
       },
     ]
-  },
-  {
-    path: '/register',
-    name: 'register',
-    meta: {
-      guard: 'guest',
-    },
-    component: () => import('@/pages/Register.vue'),
   },
 ];
 

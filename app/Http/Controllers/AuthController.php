@@ -18,7 +18,6 @@ class AuthController extends Controller
 
     }
 
-
     public function sendSecretCode(PhoneRequest $request)
     {
         return $this->service->sendSecretCode($request);
