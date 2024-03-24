@@ -18,12 +18,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $startRouteId = 17; 
 
-        $carRides = CarRide::with(['cities' => function ($query) use ($startRouteId) {
-            $query->orderBy('id', 'asc')->take(1); // Сортируем по id и берем только первую запись
-        }])->get();
-
-        dd($carRides[2]);
     }
 }

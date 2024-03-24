@@ -22,6 +22,7 @@ Route::apiResource('car-ride', CarRideController::class);
 Route::apiResource('fuel_type', FuelTypeController::class)->only(['index']);
 Route::apiResource('users', UserController::class)->only(['index']);
 
+Route::get('/car-rides/start-region/{region_id}', [CarRideController::class, 'startRegion']);
 
 Route::middleware('auth:sanctum')->group(function () {
 

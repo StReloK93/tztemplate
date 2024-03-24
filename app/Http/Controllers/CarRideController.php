@@ -6,6 +6,7 @@ use App\Models\CarRide;
 use App\Models\CarRideCity;
 use Illuminate\Http\Request;
 use App\Events\CarRideCreateEvent;
+use App\Models\District;
 class CarRideController extends Controller
 {
     public function index()
@@ -26,7 +27,7 @@ class CarRideController extends Controller
             'state' => true,
         ]);
 
-        
+
 
         foreach ($request->ends as $key => $item) {
             CarRideCity::create([
@@ -64,6 +65,22 @@ class CarRideController extends Controller
             ]);
         }
         return $carRide->fresh();
+    }
+
+
+    public function startRegion($region)
+    {
+        $dist = District::where('region_id', $region)->get();
+        $districts = $dist->pluck('id');
+        $rides = CarRide::whereState(1)->whereHas('cities', function ($query) use($districts) {
+            $query->whereIn('district_id', $districts->all());
+        })->get();
+
+        $car_rides = $rides->filter(function ($rides) use ($districts) {
+            $firstComment = $rides->cities()->first();
+            return in_array($firstComment->district_id, $districts->all());
+        });
+        return ['districts' => $dist, 'car_rides' => $car_rides];
     }
 
 
