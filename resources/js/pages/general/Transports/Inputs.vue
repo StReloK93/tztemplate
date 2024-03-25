@@ -5,7 +5,7 @@
                 :items="pageData.users"
                 v-model="formData.user_id"
                 label="Foydalanuvchi"
-                item-title="name"
+                item-title="phone"
                 :item-value="(item) => item.id"
                 :rules="rules"
             />

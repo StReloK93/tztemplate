@@ -9,25 +9,33 @@
 			</v-tab>
 		</v-tabs>
 		<section>
-			<main v-for="(districts, name) in groupRides">
-				<div class="tw-bg-gray-100 px-4 py-1">
-					{{ name }}
-				</div>
-				<article class="d-flex">
-					<aside v-for="(endpoint, city_id) in districts" class="tw-w-1/6 px-2 tw-border-r">
-						<div class="">
-							<header class="text-center text-pink tw-font-medium tw-text-sm tw-py-1.5">
-								{{ city_id }}
-							</header>
-							<footer>
-								<div v-for="ride in endpoint" class="py-1 tw-bg-gray-100 px-2 mb-1">
-									{{ ride.car.type }} {{ ride.free_seat }}
+			<v-expansion-panels v-model="props.panel" multiple variant="accordion">
+				<v-expansion-panel v-for="(districts, name) in groupRides">
+					<v-expansion-panel-title>{{name}}</v-expansion-panel-title>
+					<v-expansion-panel-text class="operator">
+						<article class="d-flex">
+							<aside v-for="(endpoint, city_id) in districts" class="tw-w-1/5 pa-2 tw-border-r tw-shadow-inner">
+								<div>
+									<header class="text-center text-pink tw-font-medium tw-text-sm tw-py-2">
+										<!-- @vue-skip -->
+										{{ replaceCity(name) }} - {{ city_id.replace("viloyati", "") }}
+									</header>
+									<footer>
+										<v-sheet v-for="ride in endpoint" elevation="1" color="pink" class="d-flex justify-space-between px-4 py-1 rounded" v-ripple>
+											<span>
+												{{ ride.car.type }}
+											</span>
+											<span>
+												{{ ride.free_seat }}
+											</span>
+										</v-sheet>
+									</footer>
 								</div>
-							</footer>
-						</div>
-					</aside>
-				</article>
-			</main>
+							</aside>
+						</article>
+					</v-expansion-panel-text>
+				</v-expansion-panel>
+			</v-expansion-panels>
 		</section>
 	</v-card>
 </template>
@@ -42,9 +50,10 @@ const props = reactive({
 	regions: null,
 	carRides: [],
 	districts: null,
+	panel: 0,
 })
 
-const groupRides:any = computed(() => {
+const groupRides: any = computed(() => {
 	const dists = {}
 	props.districts?.forEach(district => {
 		props.carRides.forEach((ride) => {
@@ -52,7 +61,7 @@ const groupRides:any = computed(() => {
 			if (district.id == ride.cities[0].district_id) {
 				const group = `${ride.cities.at(-1).district.region.name} ${ride.cities.at(-1).district.name}`
 				if (dists[district.name]) {
-					
+
 					if (dists[district.name][group]) {
 						dists[district.name][group].push(ride)
 					}
@@ -63,13 +72,11 @@ const groupRides:any = computed(() => {
 				else {
 					dists[district.name] = {}
 					dists[district.name][group] = [ride]
-				} 
+				}
 			}
-			
+
 		})
 	})
-	console.log(dists);
-	
 	return dists
 })
 
@@ -78,8 +85,6 @@ async function getCarRides(region_id) {
 		.then(({ data }) => {
 			props.carRides = data.car_rides
 			props.districts = data.districts
-			console.log(data.districts)
-			
 		})
 }
 
@@ -90,7 +95,18 @@ axios.get('region').then(({ data: regions }) => {
 })
 
 
+function replaceCity(name){
+	return name.replace("tumani", "").replace("shahri", '')
+}
+
 watch(route, (current) => {
 	getCarRides(current.params.id)
+	props.panel = 0
 })
 </script>
+
+<style>
+.operator .v-expansion-panel-text__wrapper{
+	padding: 0px!important;
+}
+</style>
