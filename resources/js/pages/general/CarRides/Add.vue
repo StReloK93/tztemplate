@@ -21,7 +21,6 @@ const pageData = reactive({ dialog: false })
 
 async function submitFunction() {
     const formData = inputComponent.value.formData
-    if(formData.ride_time == null) return inputComponent.value.datePicked()
     
     formData.price = unformat(formData.price, moneyConfig)
     if (formData.strictly_on_time == null) formData.strictly_on_time = false

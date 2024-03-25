@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 
+.hidden .v-input__control{
+    @apply tw-opacity-0
+}
+
 .ag-center-cols-viewport{
     @apply tw-px-0.5;
 }

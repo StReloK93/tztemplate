@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="pageData.dialog" scrollable persistent width="600px">
-        <CustomForm :submit="submitFunction" title="Mahsulot kiritish" @close="pageData.dialog = false">
+        <CustomForm :submit="submitFunction" title="Qatnovni tahrirlash" @close="pageData.dialog = false">
             <Inputs ref="inputComponent" :edit="true" />
         </CustomForm>
     </v-dialog>

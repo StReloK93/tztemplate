@@ -70,7 +70,7 @@ class CarRideController extends Controller
 
     public function startRegion($region)
     {
-        $dist = District::where('region_id', $region)->get();
+        $dist = District::where('region_id', $region)->with('region')->get();
         $districts = $dist->pluck('id');
         $rides = CarRide::whereState(1)->whereHas('cities', function ($query) use($districts) {
             $query->whereIn('district_id', $districts->all());
@@ -80,7 +80,7 @@ class CarRideController extends Controller
             $firstComment = $rides->cities()->first();
             return in_array($firstComment->district_id, $districts->all());
         });
-        return ['districts' => $dist, 'car_rides' => $car_rides];
+        return ['districts' => $dist, 'car_rides' => array_values($car_rides->all())];
     }
 
 

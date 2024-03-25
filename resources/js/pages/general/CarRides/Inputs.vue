@@ -3,15 +3,6 @@
 		<v-overlay v-if="edit" v-model="pageData.overlay" contained persistent class="align-center justify-center">
 			<v-progress-circular color="primary" indeterminate :size="68"></v-progress-circular>
 		</v-overlay>
-		<v-col sm="6" cols="12">
-			<v-autocomplete @update:model-value="setPhone" :items="pageData.cars" v-model="formData.car_id"
-				label="Avtomobil" :item-title="(item) => item.type + ' ' + item.number" :item-value="(item) => item.id"
-				:rules="rules" />
-		</v-col>
-		<v-col sm="6" cols="12">
-			<v-text-field v-model="formData.phone" :step="900" label="Telefon raqami" :rules="rules" />
-		</v-col>
-		<v-divider class="border-opacity-75"></v-divider>
 		<template v-for="(city, index) in formData.ends">
 			<v-col v-if="index == 0" cols="12" class="py-2 text-center">
 				<v-label class="text-caption  mr-3">
@@ -58,13 +49,19 @@
 				borderless
 				expanded
 				is24hr
+				hide-time-header
 				is-required
 			/>
+			<v-text-field class="mb-3 hidden tw-relative -tw-top-20" v-model="formData.ride_time" :step="900" label="Telefon raqami" :rules="rules" readonly />
 			<div v-if="dateIsset" class="v-messages text-error font-weight-regular pb-2 !tw-opacity-100">
 				<div class="v-messages__message">To'ldiring</div>
 			</div>
 		</v-col>
 		<v-col sm="6" cols="12">
+			<v-autocomplete class="mb-3" @update:model-value="setPhone" :items="pageData.cars" v-model="formData.car_id"
+				label="Avtomobil" :item-title="(item) => item.type + ' ' + item.number" :item-value="(item) => item.id"
+				:rules="rules" />
+			<v-text-field class="mb-3" v-model="formData.phone" :step="900" label="Telefon raqami" :rules="rules" />
 			<v-text-field label="Narxi" :rules="rules" v-model.lazy="formData.price" class="mb-3" />
 			<v-text-field v-model="formData.free_seat" type="number" label="Bosh o'rindiqlar" class="mb-3" :rules="rules" />
 			<input v-money3="config" v-model.lazy="formData.price" type="text" hidden>
@@ -125,9 +122,6 @@ async function regionChanged(id, index) {
 	})
 }
 
-function datePicked(){
-	if(formData.ride_time == null) dateIsset.value = true
-}
 
 
 function clearOverlay() {
@@ -140,5 +134,5 @@ axios.all([axios.get('car'), axios.get('region')])
 		pageData.regions = regions
 	}))
 
-defineExpose({ regionChanged, formData, clearOverlay, datePicked })
+defineExpose({ regionChanged, formData, clearOverlay })
 </script>
