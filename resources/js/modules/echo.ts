@@ -6,6 +6,7 @@ window.Pusher = Pusher
 class Singleton {
 	private static instance: Singleton;
 	constructor() {
+
 		const echo = new Echo({
 			wsHost: '127.0.0.1',
 			wsPort: 6001,
@@ -16,8 +17,7 @@ class Singleton {
 			cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
 			disableStats: true,
 			forceTLS: false,
-		});
-		
+		})
 		return echo
 
 		

@@ -67,3 +67,7 @@
 .ag-cell{
     border: none!important;
 }
+
+.operator .v-expansion-panel-text__wrapper{
+	padding: 0px!important;
+}
