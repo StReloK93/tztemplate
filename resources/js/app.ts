@@ -36,6 +36,6 @@ async function init() {
 	await store.getUser()
 	app.use(router)
 	app.mount("#app")
-	axios.defaults.headers.common['X-Socket-Id'] = echo.socketId();
+	// axios.defaults.headers.common['X-Socket-Id'] = echo.socketId();
 }
 init()

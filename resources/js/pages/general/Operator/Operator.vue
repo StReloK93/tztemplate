@@ -14,24 +14,27 @@
 					<v-expansion-panel-title>{{ name }}</v-expansion-panel-title>
 					<v-expansion-panel-text class="operator">
 						<article class="d-flex">
-							<aside v-for="(endpoint, city_id) in districts" class="tw-w-1/5 px-2 tw-border-r tw-shadow-inner">
+							<aside v-for="(endpoint, key) in districts" class="tw-w-1/5 px-2 tw-border-r tw-shadow-inner">
 								<div>
 									<header class="text-center text-pink tw-font-medium tw-text-sm tw-py-2 mb-2">
 										<!-- @vue-skip -->
-										{{ name }} - {{ city_id.replace("viloyati", "V.") }}
+										{{ name }} - {{ key.replace("viloyati", "V.") }}
 									</header>
 									<footer>
-										<v-sheet @click="rideModal.toggle()" v-for="ride in endpoint" tag="button" elevation="1" color="pink"
-											class="d-flex w-100 justify-space-between px-3 py-1 rounded mb-2 tw-cursor-pointer"
+										<v-sheet @click="rideModal.openModal(ride.id)" v-for="ride in endpoint" tag="button" elevation="1" color="pink"
+											class="d-flex w-100 justify-space-between tw-flex-wrap px-3 py-1 rounded mb-2 tw-cursor-pointer"
 											v-ripple>
-											<aside>
+											<aside class="w-50 tw-text-left">
 												{{ ride.car.type }}
 											</aside>
-											<div>
-												<v-icon size="small" v-for="n in  ride.free_seat">
+											<div class="w-50 tw-text-right tw-font-bold text-pink-lighten-5">
+												{{ ride.price }} so'm
+											</div>
+											<main class="w-full">
+												<v-icon color="pink-lighten-3" size="small" v-for="n in ride.free_seat">
 													mdi-account
 												</v-icon>
-											</div>
+											</main>
 										</v-sheet>
 									</footer>
 								</div>

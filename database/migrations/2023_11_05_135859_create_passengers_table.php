@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone');
+            $table->string('address')->nullable();
             $table->integer('start_city');
             $table->integer('end_city');
-            $table->boolean('with_trunk');
-            $table->dateTime('ride_time');
+            $table->boolean('with_trunk')->nullable();
+            $table->dateTime('ride_time')->nullable();
             $table->boolean('state')->default(true);
             $table->timestamps();
         });

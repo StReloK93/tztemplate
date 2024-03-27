@@ -1,11 +1,11 @@
 <template>
    <div class="pa-4 text-center">
       <v-dialog v-model="props.dialog" scrollable persistent width="600px">
-         <v-card>
+         <v-card  @vue:unmounted="ride = null">
+            <v-card-title >{{ride?.car.type}} - {{ ride?.car.number }}</v-card-title>
             <v-divider class="mt-3"></v-divider>
-
             <v-card-text class="px-4" style="height: 300px;">
-               asdsa
+               {{ride?.phone}}
             </v-card-text>
 
             <v-divider></v-divider>
@@ -25,20 +25,26 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref, Ref } from 'vue'
+import { CarRide } from '@/interfaces'
 const props = reactive({
    dialog: false,
-   ride: null
 })
 
+const ride: Ref<CarRide> = ref()
 function getCarRide(ride_id) {
-   
+   axios.get<CarRide>(`car-ride/${ride_id}`).then(async ({ data }) => {
+
+      ride.value = data
+
+   })
 }
 
 
-const toggle = (ride_id) => {
+const openModal = (ride_id) => {
    props.dialog = true
-   props.ride = ride_id
+   getCarRide(ride_id)
+
 }
-defineExpose({ toggle })
+defineExpose({ openModal })
 </script>

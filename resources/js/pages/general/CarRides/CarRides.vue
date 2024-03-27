@@ -27,9 +27,9 @@ import { reactive, ref } from 'vue'
 import { CarRide } from '@/interfaces'
 import { useDisplay } from 'vuetify'
 import { watch } from 'vue'
-echo.channel('home').listen('CarRideCreateEvent', (event) => {
-    onCreate(event.msg)
-})
+// echo.channel('home').listen('CarRideCreateEvent', (event) => {
+//     onCreate(event.msg)
+// })
 const editComponent = ref()
 const filterComponent = ref()
 const colDefs = getColDefs(editComponent, onDelete)
