@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('car_id');
             $table->string('phone');
-            $table->dateTime('ride_time');
+            $table->dateTime('ride_time')->nullable();
             $table->boolean('strictly_on_time');
             $table->integer('price');
             $table->boolean('address_to_address');

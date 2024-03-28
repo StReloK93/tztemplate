@@ -5,7 +5,7 @@
             <Filters class="w-100" v-if="pageData.gridApi" ref="filterComponent" :pageData="pageData" filter-array="car_rides" />
 
             <v-btn @click="sortByCountryThenSport" variant="plain" icon="mdi-sort" />
-            <Add @create="onCreate"></Add>
+            <Add @create="onCreate" :date="true"></Add>
         </main>
         <v-spacer>
             <AgGridVue class="ag-theme-ruzzifer ag-theme-alpine h-100" :animateRows="true"

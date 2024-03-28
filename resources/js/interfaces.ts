@@ -55,6 +55,7 @@ export interface CarRide{
     cities: CarRideCity[],
     start_city: number,
     ride_time: Date,
+    passengers: Passenger[],
     strictly_on_time: boolean,
     price: number,
     address_to_address: boolean,
@@ -75,8 +76,10 @@ export interface CarRideCity{
 
 export interface Passenger{
     id?: number,
+    car_ride_id: number | null,
     name: string,
     phone: string,
+    address: string,
     start_city: number,
     start?: Districts,
     start_region?: number,

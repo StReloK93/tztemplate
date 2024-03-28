@@ -8,7 +8,10 @@
 			</v-tab>
 		</v-tabs>
 		<section>
+			<Add />
+			<!--  -->
 			<CarRideModal ref="rideModal" />
+			<!--  -->
 			<v-expansion-panels v-model="props.panel" multiple variant="accordion">
 				<v-expansion-panel v-for="(districts, name) in groupRides">
 					<v-expansion-panel-title>{{ name }}</v-expansion-panel-title>
@@ -17,25 +20,11 @@
 							<aside v-for="(endpoint, key) in districts" class="tw-w-1/5 px-2 tw-border-r tw-shadow-inner">
 								<div>
 									<header class="text-center text-pink tw-font-medium tw-text-sm tw-py-2 mb-2">
-										<!-- @vue-skip -->
-										{{ name }} - {{ key.replace("viloyati", "V.") }}
+										<span>{{ name }}</span>
+										- {{ trueNameCity(key) }}
 									</header>
 									<footer>
-										<v-sheet @click="rideModal.openModal(ride.id)" v-for="ride in endpoint" tag="button" elevation="1" color="pink"
-											class="d-flex w-100 justify-space-between tw-flex-wrap px-3 py-1 rounded mb-2 tw-cursor-pointer"
-											v-ripple>
-											<aside class="w-50 tw-text-left">
-												{{ ride.car.type }}
-											</aside>
-											<div class="w-50 tw-text-right tw-font-bold text-pink-lighten-5">
-												{{ ride.price }} so'm
-											</div>
-											<main class="w-full">
-												<v-icon color="pink-lighten-3" size="small" v-for="n in ride.free_seat">
-													mdi-account
-												</v-icon>
-											</main>
-										</v-sheet>
+										<CarRideCard @click="rideModal.openModal(ride.id)" v-for="ride in endpoint" :ride="ride" />
 									</footer>
 								</div>
 							</aside>
@@ -51,6 +40,8 @@
 import { reactive, watch, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import CarRideModal from './CarRideModal.vue'
+import CarRideCard from './CarRideCard.vue'
+import Add from '@/pages/general/CarRides/Add.vue'
 const rideModal = ref()
 const route = useRoute()
 const props = reactive({
@@ -67,7 +58,13 @@ const groupRides: any = computed(() => {
 		props.carRides.forEach((ride) => {
 
 			if (district.id == ride.cities[0].district_id) {
-				const group = `${ride.cities.at(-1).district.region.name} ${ride.cities.at(-1).district.name}`
+				let group = `${ride.cities.at(-1).district.region.name} ${ride.cities.at(-1).district.name}`
+				const array = group.split(' ');
+				if (hasDuplicates(array)) {
+					group = ride.cities.at(-1).district.name
+				}
+
+
 				if (dists[district.name]) {
 
 					if (dists[district.name][group]) {
@@ -99,6 +96,12 @@ getCarRides(route.params.id)
 axios.get('region').then(({ data }) => props.regions = data)
 
 
+function hasDuplicates(array) {
+	return (new Set(array)).size !== array.length;
+}
+function trueNameCity(name) {
+	return name.replace("viloyati", ".V")
+}
 
 watch(route, (current) => {
 	getCarRides(current.params.id)

@@ -38,7 +38,7 @@
 			</div>
 		</template>
 		<v-divider class="border-opacity-75"></v-divider>
-		<v-col sm="6" cols="12">
+		<v-col v-if="date" sm="6" cols="12">
 			<VDatePicker
 				color="pink"
 				:min-date="new Date()"
@@ -52,7 +52,11 @@
 				hide-time-header
 				is-required
 			/>
-			<v-text-field class="mb-3 hidden tw-relative -tw-top-20" v-model="formData.ride_time" :step="900" label="Telefon raqami" :rules="rules" readonly />
+			<v-text-field
+				class="hidden tw-relative -tw-top-20" 
+				v-model="formData.ride_time" 
+				:rules="rules" readonly
+			/>
 			<div v-if="dateIsset" class="v-messages text-error font-weight-regular pb-2 !tw-opacity-100">
 				<div class="v-messages__message">To'ldiring</div>
 			</div>
@@ -75,7 +79,7 @@
 import config from '@/modules/moneyConfig'
 import { rules } from '@/modules/helpers'
 import { reactive,ref } from 'vue'
-const { edit } = defineProps(['edit'])
+const { edit, date } = defineProps(['edit', 'date'])
 const dateIsset = ref(false)
 
 const formData = reactive({

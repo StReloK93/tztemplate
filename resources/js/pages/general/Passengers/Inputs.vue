@@ -68,11 +68,15 @@
         </v-col>
         <v-divider class="border-opacity-75"></v-divider>
         <v-col sm="6" cols="12">
-            <v-text-field v-model="formData.ride_time" type="datetime-local" :step="900" label="Qatnov vaqti"
+            <v-text-field v-model="formData.address" :step="900" label="Manzil"
                 :rules="rules" />
         </v-col>
         <v-col sm="6" cols="12">
             <v-switch v-model="formData.with_trunk" label="Bagaj"></v-switch>
+        </v-col>
+        <v-col sm="6" cols="12">
+            <v-text-field v-model="formData.ride_time" type="datetime-local" :step="900" label="Qatnov vaqti"
+                :rules="rules" />
         </v-col>
     </v-row>
 </template>
@@ -83,8 +87,10 @@ import { rules } from '@/modules/helpers'
 import { reactive } from 'vue'
 
 const formData: Passenger = reactive({
+    car_ride_id: null,
     name: null,
     phone: null,
+    address: null,
     start_region: null,
     start_city: null,
     end_region: null,

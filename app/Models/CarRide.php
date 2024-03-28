@@ -32,6 +32,7 @@ class CarRide extends Model
     protected $with = [
         'car',
         'cities',
+        'passengers'
     ];
 
     public function car()
@@ -42,5 +43,10 @@ class CarRide extends Model
     public function cities()
     {
         return $this->hasMany(CarRideCity::class)->with('district');
+    }
+
+    public function passengers()
+    {
+        return $this->hasMany(Passenger::class);
     }
 }

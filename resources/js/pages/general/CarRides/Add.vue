@@ -4,7 +4,7 @@
             <v-btn color="primary" v-bind="props" icon="mdi-plus" class="add-button" />
         </template>
         <CustomForm :submit="submitFunction" title="Qatnov kiritish" @close="pageData.dialog = false">
-            <Inputs ref="inputComponent" />
+            <Inputs ref="inputComponent" :date="props.date" />
         </CustomForm>
     </v-dialog>
 </template>
@@ -14,6 +14,7 @@ import { reactive, ref } from 'vue'
 import Inputs from './Inputs.vue'
 import moneyConfig from '@/modules/moneyConfig'
 import { unformat } from 'v-money3'
+const props = defineProps(['date'])
 const emit = defineEmits(['create'])
 const inputComponent = ref()
 const pageData = reactive({ dialog: false })

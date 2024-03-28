@@ -17,6 +17,8 @@ class PassengerController extends Controller
         $passenger = new Passenger();
         $passenger->name = $request->name;
         $passenger->phone = $request->phone;
+        $passenger->address = $request->address;
+        $passenger->car_ride_id = $request->car_ride_id;
         $passenger->start_city = $request->start_city;
         $passenger->end_city = $request->end_city;
         $passenger->with_trunk = $request->with_trunk;
@@ -37,6 +39,8 @@ class PassengerController extends Controller
     {
         $passenger->name = $request->name;
         $passenger->phone = $request->phone;
+        $passenger->address = $request->address;
+        $passenger->car_ride_id = $request->car_ride_id;
         $passenger->start_city = $request->start_city;
         $passenger->end_city = $request->end_city;
         $passenger->with_trunk = $request->with_trunk;
